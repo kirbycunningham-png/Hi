@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Chat After Purchase (TalkJS)</title>
+
+  <!-- TalkJS -->
+  <script>
+    (function(t,a,l,k,j,s){
+      s=a.createElement('script');s.async=1;s.src="https://cdn.talkjs.com/talk.js";
+      a.head.appendChild(s);k=t.Promise;
+      t.Talk={v:3,ready:{then:function(f){if(k)return new k(function(r,e){l.push([f,r,e])});l.push([f])},catch:function(){return k&&new k()},c:l}};
+    })(window,document,[]);
+  </script>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 40px;
+    }
+
+    button {
+      padding: 12px 20px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    #chatButton {
+      display: none;
+      margin-top: 20px;
+    }
+
+    #talkjs-container {
+      width: 100%;
+      height: 500px;
+      margin-top: 20px;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Product Page</h1>
+  <p>Buy the product to unlock chat with the seller.</p>
+
+  <!-- Buy button -->
+  <button id="buyButton">Buy Now</button>
+
+  <!-- Chat button (shown after purchase) -->
+  <button id="chatButton">Chat with Seller</button>
+
+  <!-- TalkJS chat container -->
+  <div id="talkjs-container"></div>
+
+  <script>
+    const buyButton = document.getElementById("buyButton");
+    const chatButton = document.getElementById("chatButton");
+    const chatContainer = document.getElementById("talkjs-container");
+
+    // Simulate purchase
+    buyButton.addEventListener("click", () => {
+      alert("Purchase successful!");
+      buyButton.style.display = "none";
+      chatButton.style.display = "inline-block";
+    });
+
+    chatButton.addEventListener("click", () => {
+      chatContainer.style.display = "block";
+
+      Talk.ready.then(function () {
+        // Buyer
+        const buyer = new Talk.User({
+          id: "buyer_123",
+          name: "Buyer",
+          email: "buyer@example.com",
+          photoUrl: "https://talkjs.com/images/avatar-1.jpg",
+          role: "buyer"
+        });
+
+        // Seller
+        const seller = new Talk.User({
+          id: "seller_456",
+          name: "Seller",
+          email: "seller@example.com",
+          photoUrl: "https://talkjs.com/images/avatar-5.jpg",
+          role: "seller"
+        });
+
+        const session = new Talk.Session({
+          appId: "tRkW5nYP",
+          me: buyer
+        });
+
+        const conversationId = Talk.oneOnOneId(buyer, seller);
+        const conversation = session.getOrCreateConversation(conversationId);
+
+        conversation.setParticipant(buyer);
+        conversation.setParticipant(seller);
+
+        const inbox = session.createInbox({ selected: conversation });
+        inbox.mount(chatContainer);
+      });
+    });
+  </script>
+
+</body>
+</html>
