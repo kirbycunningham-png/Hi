@@ -17,6 +17,7 @@ body {
     flex-direction: column;
     align-items: center;
 }
+
 h1, h2 {
     color: #00ff9c;
     text-align: center;
@@ -27,52 +28,42 @@ h2 { font-size: 1.8em; margin-bottom: 30px; }
 
 .purchase-container {
     display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
     width: 100%;
-    max-width: 1400px; /* make container wider */
-    justify-content: center;
+    max-width: 1600px;
+    gap: 20px;
+    justify-content: flex-start;
+    align-items: flex-start;
 }
 
 .left-panel {
-    flex: 1 1 250px;
-    min-width: 250px;
     display: flex;
     flex-direction: column;
     gap: 20px;
+    min-width: 250px;
 }
 
-#cashappBtn {
+.left-panel button {
     padding: 15px;
     font-weight: bold;
     border-radius: 12px;
     border: none;
     cursor: pointer;
-    background: #00c244;
-    color: white;
     transition: 0.3s;
 }
-#cashappBtn:hover { opacity: 0.85; }
 
-.right-panel {
-    flex: 3 1 900px; /* stretch much wider */
-    min-width: 700px;
-    height: 650px;
-    border-radius: 20px;
-    background: #1c1e2a;
-    overflow: hidden;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
+#cashappBtn {
+    background: #00c244;
+    color: white;
 }
 
+.left-panel button:hover { opacity: 0.85; }
+
+/* Stretch chat like ElDorado */
 #chatContainer {
-    width: 100%;  /* full width */
-    height: 100%; /* full height */
+    flex: 1;
+    height: 700px;
     border-radius: 12px;
     overflow: hidden;
-    position: relative;
 }
 </style>
 </head>
@@ -85,9 +76,7 @@ h2 { font-size: 1.8em; margin-bottom: 30px; }
     <div class="left-panel">
         <button id="cashappBtn">Pay with CashApp</button>
     </div>
-    <div class="right-panel">
-        <div id="chatContainer"></div>
-    </div>
+    <div id="chatContainer"></div> <!-- chat takes all remaining width -->
 </div>
 
 <script>
@@ -104,10 +93,6 @@ document.getElementById("cashappBtn").addEventListener("click", () => {
 // ===== TalkJS Chat =====
 const username = localStorage.getItem("username") || "Guest";
 const userId = localStorage.getItem("userId") || "buyer_" + username;
-
-let chatBoxInstance = null;
-let overlay = null;
-const chatContainer = document.getElementById("chatContainer");
 
 async function initChat() {
     if(!username || username === "Guest"){
@@ -141,52 +126,16 @@ async function initChat() {
     conversation.setParticipant(me);
     conversation.setParticipant(sellerUser);
 
-    if(!chatBoxInstance){
-        chatBoxInstance = session.createChatbox(conversation, {
-            welcomeMessage: null,
-            showChatHeader: true,
-            showUserList: false
-        });
-        chatBoxInstance.mount(chatContainer);
-    }
+    const chatBoxInstance = session.createChatbox(conversation, {
+        welcomeMessage: null,
+        showChatHeader: true,
+        showUserList: false
+    });
 
-    chatContainer.style.display = "block";
-
-    function addOverlay() {
-        if(!overlay){
-            overlay = document.createElement("div");
-            overlay.style.position = "absolute";
-            overlay.style.top = "65px";
-            overlay.style.left = "22.5%";
-            overlay.style.width = "55%";
-            overlay.style.height = "40px";
-            overlay.style.background = "#111111"; // black overlay
-            overlay.style.borderRadius = "5px";
-            overlay.style.zIndex = "10000";
-            overlay.style.pointerEvents = "none";
-            chatContainer.appendChild(overlay);
-
-            const defaultMsg = chatContainer.querySelector(".talkjs-message-system");
-            if(defaultMsg){
-                defaultMsg.textContent = "Welcome to your chat with the seller!";
-            }
-        }
-    }
-
-    // Overlay delay 450ms
-    setTimeout(addOverlay, 450);
+    chatBoxInstance.mount(document.getElementById("chatContainer"));
 }
 
-// Initialize chat automatically
 initChat();
-
-// ===== Refresh page once per session after 1 sec =====
-if(!sessionStorage.getItem("pageRefreshed")) {
-    sessionStorage.setItem("pageRefreshed", "true");
-    setTimeout(() => {
-        window.location.reload();
-    }, 1000);
-}
 </script>
 
 </body>
