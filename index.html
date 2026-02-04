@@ -29,7 +29,7 @@ h2 { font-size: 1.8em; margin-bottom: 30px; }
 .purchase-container {
     display: flex;
     width: 100%;
-    max-width: 1600px;
+    max-width: 1800px; /* wider max width */
     gap: 20px;
     justify-content: flex-start;
     align-items: flex-start;
@@ -39,7 +39,7 @@ h2 { font-size: 1.8em; margin-bottom: 30px; }
     display: flex;
     flex-direction: column;
     gap: 20px;
-    min-width: 250px;
+    min-width: 200px;
 }
 
 .left-panel button {
@@ -58,12 +58,13 @@ h2 { font-size: 1.8em; margin-bottom: 30px; }
 
 .left-panel button:hover { opacity: 0.85; }
 
-/* Stretch chat like ElDorado */
+/* Stretch TalkJS chat like ElDorado */
 #chatContainer {
     flex: 1;
     height: 700px;
     border-radius: 12px;
     overflow: hidden;
+    max-width: 1500px; /* chat very wide */
 }
 </style>
 </head>
@@ -76,7 +77,7 @@ h2 { font-size: 1.8em; margin-bottom: 30px; }
     <div class="left-panel">
         <button id="cashappBtn">Pay with CashApp</button>
     </div>
-    <div id="chatContainer"></div> <!-- chat takes all remaining width -->
+    <div id="chatContainer"></div> <!-- chat takes remaining width -->
 </div>
 
 <script>
