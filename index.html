@@ -1,107 +1,193 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Chat After Purchase (TalkJS)</title>
+<meta charset="UTF-8">
+<title>Purchase - ElDorado Marketplace</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="https://cdn.talkjs.com/talk.js"></script>
+<style>
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(135deg, #0f1115, #1a1c25);
+    color: #fff;
+    min-height: 100vh;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+h1, h2 {
+    color: #00ff9c;
+    text-align: center;
+    margin: 0;
+}
+h1 { font-size: 2.5em; margin-bottom: 10px; }
+h2 { font-size: 1.8em; margin-bottom: 30px; }
 
-  <!-- TalkJS -->
-  <script>
-    (function(t,a,l,k,j,s){
-      s=a.createElement('script');s.async=1;s.src="https://cdn.talkjs.com/talk.js";
-      a.head.appendChild(s);k=t.Promise;
-      t.Talk={v:3,ready:{then:function(f){if(k)return new k(function(r,e){l.push([f,r,e])});l.push([f])},catch:function(){return k&&new k()},c:l}};
-    })(window,document,[]);
-  </script>
+.purchase-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    width: 100%;
+    max-width: 1400px; /* make container wider */
+    justify-content: center;
+}
 
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      padding: 40px;
-    }
+.left-panel {
+    flex: 1 1 250px;
+    min-width: 250px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
 
-    button {
-      padding: 12px 20px;
-      font-size: 16px;
-      cursor: pointer;
-    }
+#cashappBtn {
+    padding: 15px;
+    font-weight: bold;
+    border-radius: 12px;
+    border: none;
+    cursor: pointer;
+    background: #00c244;
+    color: white;
+    transition: 0.3s;
+}
+#cashappBtn:hover { opacity: 0.85; }
 
-    #chatButton {
-      display: none;
-      margin-top: 20px;
-    }
+.right-panel {
+    flex: 3 1 900px; /* stretch much wider */
+    min-width: 700px;
+    height: 650px;
+    border-radius: 20px;
+    background: #1c1e2a;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
 
-    #talkjs-container {
-      width: 100%;
-      height: 500px;
-      margin-top: 20px;
-      display: none;
-    }
-  </style>
+#chatContainer {
+    width: 100%;  /* full width */
+    height: 100%; /* full height */
+    border-radius: 12px;
+    overflow: hidden;
+    position: relative;
+}
+</style>
 </head>
 <body>
 
-  <h1>Product Page</h1>
-  <p>Buy the product to unlock chat with the seller.</p>
+<h1 id="itemName">Loading Product...</h1>
+<h2 id="itemPrice">$0.00</h2>
 
-  <!-- Buy button -->
-  <button id="buyButton">Buy Now</button>
+<div class="purchase-container">
+    <div class="left-panel">
+        <button id="cashappBtn">Pay with CashApp</button>
+    </div>
+    <div class="right-panel">
+        <div id="chatContainer"></div>
+    </div>
+</div>
 
-  <!-- Chat button (shown after purchase) -->
-  <button id="chatButton">Chat with Seller</button>
+<script>
+// ===== Dynamic Product Info =====
+const urlParams = new URLSearchParams(window.location.search);
+document.getElementById("itemName").textContent = urlParams.get("name") || "Unknown Product";
+document.getElementById("itemPrice").textContent = urlParams.get("price") || "$0.00";
 
-  <!-- TalkJS chat container -->
-  <div id="talkjs-container"></div>
+// ===== CashApp Redirect =====
+document.getElementById("cashappBtn").addEventListener("click", () => {
+    window.location.href = "https://cash.app/$durgot";
+});
 
-  <script>
-    const buyButton = document.getElementById("buyButton");
-    const chatButton = document.getElementById("chatButton");
-    const chatContainer = document.getElementById("talkjs-container");
+// ===== TalkJS Chat =====
+const username = localStorage.getItem("username") || "Guest";
+const userId = localStorage.getItem("userId") || "buyer_" + username;
 
-    // Simulate purchase
-    buyButton.addEventListener("click", () => {
-      alert("Purchase successful!");
-      buyButton.style.display = "none";
-      chatButton.style.display = "inline-block";
+let chatBoxInstance = null;
+let overlay = null;
+const chatContainer = document.getElementById("chatContainer");
+
+async function initChat() {
+    if(!username || username === "Guest"){
+        window.location.href = "signup.html";
+        return;
+    }
+
+    await Talk.ready;
+
+    const me = new Talk.User({
+        id: userId,
+        name: username,
+        email: "guest@example.com",
+        photoUrl: `https://ui-avatars.com/api/?name=${username.charAt(0)}&background=00ff9c&color=000`
     });
 
-    chatButton.addEventListener("click", () => {
-      chatContainer.style.display = "block";
-
-      Talk.ready.then(function () {
-        // Buyer
-        const buyer = new Talk.User({
-          id: "buyer_123",
-          name: "Buyer",
-          email: "buyer@example.com",
-          photoUrl: "https://talkjs.com/images/avatar-1.jpg",
-          role: "buyer"
-        });
-
-        // Seller
-        const seller = new Talk.User({
-          id: "seller_456",
-          name: "Seller",
-          email: "seller@example.com",
-          photoUrl: "https://talkjs.com/images/avatar-5.jpg",
-          role: "seller"
-        });
-
-        const session = new Talk.Session({
-          appId: "tRkW5nYP",
-          me: buyer
-        });
-
-        const conversationId = Talk.oneOnOneId(buyer, seller);
-        const conversation = session.getOrCreateConversation(conversationId);
-
-        conversation.setParticipant(buyer);
-        conversation.setParticipant(seller);
-
-        const inbox = session.createInbox({ selected: conversation });
-        inbox.mount(chatContainer);
-      });
+    const sellerUser = new Talk.User({
+        id: "seller",
+        name: "Seller",
+        email: "seller@example.com",
+        photoUrl: "https://i.imgur.com/0F9Z4.png"
     });
-  </script>
+
+    const session = new Talk.Session({
+        appId: "tRkW5nYP",
+        me: me,
+        notify: true
+    });
+
+    const conversation = session.getOrCreateConversation(Talk.oneOnOneId(me, sellerUser));
+    conversation.setParticipant(me);
+    conversation.setParticipant(sellerUser);
+
+    if(!chatBoxInstance){
+        chatBoxInstance = session.createChatbox(conversation, {
+            welcomeMessage: null,
+            showChatHeader: true,
+            showUserList: false
+        });
+        chatBoxInstance.mount(chatContainer);
+    }
+
+    chatContainer.style.display = "block";
+
+    function addOverlay() {
+        if(!overlay){
+            overlay = document.createElement("div");
+            overlay.style.position = "absolute";
+            overlay.style.top = "65px";
+            overlay.style.left = "22.5%";
+            overlay.style.width = "55%";
+            overlay.style.height = "40px";
+            overlay.style.background = "#111111"; // black overlay
+            overlay.style.borderRadius = "5px";
+            overlay.style.zIndex = "10000";
+            overlay.style.pointerEvents = "none";
+            chatContainer.appendChild(overlay);
+
+            const defaultMsg = chatContainer.querySelector(".talkjs-message-system");
+            if(defaultMsg){
+                defaultMsg.textContent = "Welcome to your chat with the seller!";
+            }
+        }
+    }
+
+    // Overlay delay 450ms
+    setTimeout(addOverlay, 450);
+}
+
+// Initialize chat automatically
+initChat();
+
+// ===== Refresh page once per session after 1 sec =====
+if(!sessionStorage.getItem("pageRefreshed")) {
+    sessionStorage.setItem("pageRefreshed", "true");
+    setTimeout(() => {
+        window.location.reload();
+    }, 1000);
+}
+</script>
 
 </body>
 </html>
