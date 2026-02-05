@@ -1,142 +1,119 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Purchase - ElDorado Marketplace</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<script src="https://cdn.talkjs.com/talk.js"></script>
-<style>
-body {
-    margin: 0;
-    font-family: 'Segoe UI', sans-serif;
-    background: linear-gradient(135deg, #0f1115, #1a1c25);
-    color: #fff;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
+  <meta charset="UTF-8" />
+  <title>Marketplace Chat</title>
 
-h1, h2 {
-    color: #00ff9c;
-    text-align: center;
-    margin: 0;
-}
-h1 { font-size: 2.5em; margin-bottom: 10px; }
-h2 { font-size: 1.8em; margin-bottom: 30px; }
+  <!-- TalkJS -->
+  <script>
+    (function(t,a,l,k,j,s){
+      s=a.createElement('script');s.async=1;s.src="https://cdn.talkjs.com/talk.js";
+      a.head.appendChild(s);k=t.Promise;
+      t.Talk={v:3,ready:{then:function(f){if(k)return new k(function(r,e){l.push([f,r,e])});l.push([f])},catch:function(){return k&&new k()},c:l}};
+    })(window,document,[]);
+  </script>
 
-.purchase-container {
-    display: flex;
-    width: 100%;
-    gap: 20px;
-    justify-content: flex-start;
-    align-items: flex-start;
-}
-
-.left-panel {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    min-width: 200px;
-}
-
-.left-panel button {
-    padding: 15px;
-    font-weight: bold;
-    border-radius: 12px;
-    border: none;
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-#cashappBtn {
-    background: #00c244;
-    color: white;
-}
-
-.left-panel button:hover { opacity: 0.85; }
-
-/* Stretch TalkJS chat like ElDorado */
-#chatContainer {
-    flex: 1;
-    height: 750px;
-    border-radius: 12px;
-    overflow: hidden;
-    max-width: calc(100vw - 240px); /* almost full width minus left panel */
-    min-width: 800px; /* ensures it stays wide on small screens */
-}
-</style>
-</head>
-<body>
-
-<h1 id="itemName">Loading Product...</h1>
-<h2 id="itemPrice">$0.00</h2>
-
-<div class="purchase-container">
-    <div class="left-panel">
-        <button id="cashappBtn">Pay with CashApp</button>
-    </div>
-    <div id="chatContainer"></div>
-</div>
-
-<script>
-// ===== Dynamic Product Info =====
-const urlParams = new URLSearchParams(window.location.search);
-document.getElementById("itemName").textContent = urlParams.get("name") || "Unknown Product";
-document.getElementById("itemPrice").textContent = urlParams.get("price") || "$0.00";
-
-// ===== CashApp Redirect =====
-document.getElementById("cashappBtn").addEventListener("click", () => {
-    window.location.href = "https://cash.app/$durgot";
-});
-
-// ===== TalkJS Chat =====
-const username = localStorage.getItem("username") || "Guest";
-const userId = localStorage.getItem("userId") || "buyer_" + username;
-
-async function initChat() {
-    if(!username || username === "Guest"){
-        window.location.href = "signup.html";
-        return;
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      background: #1e1f22;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
     }
 
-    await Talk.ready;
+    #chat {
+      height: 100vh;
+      width: 100vw;
+    }
 
-    const me = new Talk.User({
-        id: userId,
-        name: username,
-        email: "guest@example.com",
-        photoUrl: `https://ui-avatars.com/api/?name=${username.charAt(0)}&background=00ff9c&color=000`
-    });
+    /* ===== Discord / Eldorado Look ===== */
 
-    const sellerUser = new Talk.User({
-        id: "seller",
+    /* Sidebar */
+    .t-conversation-list {
+      background: #2b2d31 !important;
+      border-right: none !important;
+    }
+
+    /* Main chat area */
+    .t-chatbox {
+      background: #313338 !important;
+    }
+
+    /* Hide names (avatar + text only) */
+    .t-message-author {
+      display: none !important;
+    }
+
+    /* Message spacing */
+    .t-message {
+      padding: 4px 0 !important;
+    }
+
+    /* Message bubbles stretched */
+    .t-message-body {
+      max-width: 85% !important;
+      background: transparent !important;
+      color: #dbdee1 !important;
+      font-size: 15px;
+      line-height: 1.4;
+    }
+
+    /* Input area */
+    .t-composer {
+      background: #383a40 !important;
+      border-top: none !important;
+    }
+
+    .t-composer textarea {
+      background: #1e1f22 !important;
+      color: #fff !important;
+      border-radius: 6px !important;
+    }
+
+    /* Remove headers */
+    .t-chatbox-header {
+      display: none !important;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="chat"></div>
+
+  <script>
+    Talk.ready.then(function () {
+
+      const me = new Talk.User({
+        id: "buyer_1",
+        name: "Buyer",
+        email: "buyer@test.com",
+        photoUrl: "https://i.pravatar.cc/100?img=3",
+        role: "buyer"
+      });
+
+      const seller = new Talk.User({
+        id: "seller_1",
         name: "Seller",
-        email: "seller@example.com",
-        photoUrl: "https://i.imgur.com/0F9Z4.png"
+        email: "seller@test.com",
+        photoUrl: "https://i.pravatar.cc/100?img=5",
+        role: "seller"
+      });
+
+      const session = new Talk.Session({
+        appId: "tRkW5nYP", // your app id
+        me: me
+      });
+
+      const conversation = session.getOrCreateConversation(
+        Talk.oneOnOneId(me, seller)
+      );
+
+      conversation.setParticipant(me);
+      conversation.setParticipant(seller);
+
+      const chatbox = session.createChatbox(conversation);
+      chatbox.mount(document.getElementById("chat"));
     });
-
-    const session = new Talk.Session({
-        appId: "tRkW5nYP",
-        me: me,
-        notify: true
-    });
-
-    const conversation = session.getOrCreateConversation(Talk.oneOnOneId(me, sellerUser));
-    conversation.setParticipant(me);
-    conversation.setParticipant(sellerUser);
-
-    const chatBoxInstance = session.createChatbox(conversation, {
-        welcomeMessage: null,
-        showChatHeader: true,
-        showUserList: false
-    });
-
-    chatBoxInstance.mount(document.getElementById("chatContainer"));
-}
-
-initChat();
-</script>
-
+  </script>
 </body>
 </html>
