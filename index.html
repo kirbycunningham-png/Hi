@@ -1,225 +1,548 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Purple Executor</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-
-<style>
-
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-}
-
-body{
-font-family:Inter;
-background:#0b0613;
-color:white;
-overflow-x:hidden;
-}
-
-/* background glow */
-
-.bg-glow{
-position:fixed;
-width:900px;
-height:900px;
-background:radial-gradient(circle,#7a3cff40,transparent 70%);
-top:-200px;
-left:50%;
-transform:translateX(-50%);
-z-index:-1;
-}
-
-/* navbar */
-
-nav{
-display:flex;
-justify-content:space-between;
-align-items:center;
-padding:25px 10%;
-}
-
-.logo{
-font-weight:700;
-font-size:22px;
-color:#b57cff;
-}
-
-nav a{
-color:#aaa;
-text-decoration:none;
-margin-left:30px;
-transition:0.2s;
-}
-
-nav a:hover{
-color:white;
-}
-
-/* hero */
-
-.hero{
-text-align:center;
-padding:120px 20px;
-}
-
-.hero h1{
-font-size:56px;
-font-weight:700;
-background:linear-gradient(90deg,#a855f7,#c084fc,#e879f9);
--webkit-background-clip:text;
--webkit-text-fill-color:transparent;
-}
-
-.hero p{
-color:#aaa;
-margin-top:20px;
-font-size:18px;
-}
-
-/* buttons */
-
-.buttons{
-margin-top:40px;
-}
-
-.download{
-background:linear-gradient(90deg,#7a3cff,#a855f7);
-padding:16px 40px;
-border-radius:10px;
-font-weight:600;
-color:white;
-text-decoration:none;
-margin-right:15px;
-box-shadow:0 0 25px #7a3cff66;
-transition:0.25s;
-}
-
-.download:hover{
-transform:translateY(-3px);
-box-shadow:0 0 40px #a855f7;
-}
-
-.discord{
-border:1px solid #7a3cff;
-padding:16px 40px;
-border-radius:10px;
-text-decoration:none;
-color:white;
-transition:0.25s;
-}
-
-.discord:hover{
-background:#7a3cff33;
-}
-
-/* cards */
-
-.features{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-gap:25px;
-padding:80px 10%;
-}
-
-.card{
-background:rgba(255,255,255,0.03);
-backdrop-filter:blur(10px);
-border:1px solid rgba(255,255,255,0.05);
-border-radius:16px;
-padding:30px;
-transition:0.25s;
-}
-
-.card:hover{
-transform:translateY(-6px);
-border-color:#7a3cff;
-}
-
-.card h3{
-color:#c084fc;
-margin-bottom:10px;
-}
-
-/* footer */
-
-footer{
-text-align:center;
-padding:40px;
-color:#777;
-font-size:14px;
-}
-
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ascendify Executor</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Inter, sans-serif;
+            background: #070312;
+            color: white;
+            overflow-x: hidden;
+        }
+        /* Enhanced animated background with particles and blobs */
+        .background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            background: radial-gradient(circle at center, rgba(147, 51, 234, 0.1), transparent);
+        }
+        .blob {
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            filter: blur(120px);
+            opacity: 0.45;
+            border-radius: 50%;
+            animation-duration: 20s;
+            animation-iteration-count: infinite;
+            animation-timing-function: ease-in-out;
+        }
+        .blob1 {
+            background: #7a3cff;
+            top: -200px;
+            left: -100px;
+            animation: float1 18s alternate;
+        }
+        .blob2 {
+            background: #c026d3;
+            bottom: -200px;
+            right: -100px;
+            animation: float2 20s alternate;
+        }
+        .blob3 {
+            background: #a855f7;
+            top: 50%;
+            left: 50%;
+            width: 400px;
+            height: 400px;
+            animation: float3 22s alternate;
+        }
+        @keyframes float1 {
+            0% { transform: translate(0, 0) rotate(0deg) scale(1); }
+            50% { transform: translate(150px, 100px) rotate(30deg) scale(1.1); }
+            100% { transform: translate(100px, 120px) rotate(45deg) scale(1); }
+        }
+        @keyframes float2 {
+            0% { transform: translate(0, 0) rotate(0deg) scale(1); }
+            50% { transform: translate(-150px, -100px) rotate(-30deg) scale(1.1); }
+            100% { transform: translate(-100px, -120px) rotate(-45deg) scale(1); }
+        }
+        @keyframes float3 {
+            0% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(50px, -50px) scale(1.2); }
+            100% { transform: translate(-50px, 50px) scale(1.1); }
+        }
+        /* Particle effect */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+        .particle {
+            position: absolute;
+            background: #a855f7;
+            border-radius: 50%;
+            opacity: 0.3;
+            animation: particle-float 15s infinite linear;
+        }
+        @keyframes particle-float {
+            0% { transform: translateY(0); opacity: 0.3; }
+            100% { transform: translateY(-100vh); opacity: 0; }
+        }
+        /* Navbar with glow effects */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 26px 10%;
+            backdrop-filter: blur(10px);
+            background: rgba(7, 3, 18, 0.7);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            box-shadow: 0 4px 20px rgba(168, 85, 247, 0.2);
+        }
+        .logo {
+            font-size: 28px;
+            font-weight: 800;
+            background: linear-gradient(90deg, #ffffff, #a855f7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 5px rgba(168, 85, 247, 0.5);
+        }
+        nav a {
+            color: #ccc;
+            text-decoration: none;
+            margin-left: 32px;
+            transition: 0.3s;
+            font-weight: 600;
+            position: relative;
+        }
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #a855f7;
+            transition: 0.3s;
+        }
+        nav a:hover::after {
+            width: 100%;
+        }
+        nav a:hover {
+            color: white;
+            text-shadow: 0 0 15px #a855f7;
+        }
+        /* Hero section with enhanced animations and glow */
+        .hero {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: 180px 20px 130px;
+            animation: fadeIn 1.8s ease-in-out;
+            position: relative;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(168, 85, 247, 0.15), transparent);
+            z-index: -1;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .hero h1 {
+            font-size: 80px;
+            font-weight: 800;
+            background: linear-gradient(90deg, #ffffff, #c084fc, #e879f9, #a855f7, #7a3cff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 24px;
+            text-shadow: 0 0 20px #a855f788;
+        }
+        .hero p {
+            color: #b3b3b3;
+            font-size: 20px;
+            max-width: 650px;
+            margin-bottom: 40px;
+            background: linear-gradient(90deg, #ffffff, #c084fc, #e879f9, #a855f7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 10px #a855f744;
+            animation: textGlow 2s ease-in-out infinite alternate;
+        }
+        @keyframes textGlow {
+            from { text-shadow: 0 0 10px #a855f744; }
+            to { text-shadow: 0 0 20px #a855f788; }
+        }
+        .buttons {
+            display: flex;
+            gap: 20px;
+        }
+        .download, .discord {
+            padding: 20px 50px;
+            border-radius: 16px;
+            font-weight: 700;
+            text-decoration: none;
+            transition: 0.4s;
+            box-shadow: 0 0 40px rgba(147, 51, 234, 0.4);
+        }
+        .download {
+            background: linear-gradient(90deg, #ffffff, #9333ea, #c026d3, #a855f7);
+            color: #070312;
+        }
+        .download:hover {
+            transform: translateY(-6px) scale(1.06);
+            box-shadow: 0 0 80px #a855f7;
+        }
+        .discord {
+            border: 2px solid #9333ea;
+            color: #e9d5ff;
+        }
+        .discord:hover {
+            background: linear-gradient(90deg, #9333ea44, #c026d344);
+            transform: translateY(-6px) scale(1.06);
+            border-color: #c026d3;
+            box-shadow: 0 0 60px #9333ea;
+        }
+        /* Stats section - removed downloads and level 8 */
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 60px;
+            padding: 60px 20px;
+            background: rgba(7, 3, 18, 0.5);
+            border-top: 1px solid rgba(168, 85, 247, 0.2);
+            border-bottom: 1px solid rgba(168, 85, 247, 0.2);
+        }
+        .stat {
+            text-align: center;
+        }
+        .stat h2 {
+            font-size: 48px;
+            background: linear-gradient(90deg, #ffffff, #a855f7, #e879f9);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .stat p {
+            color: #9ca3af;
+            font-size: 16px;
+        }
+        /* Features grid with hover glow and icons */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 40px;
+            padding: 80px 12%;
+        }
+        .card {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 24px;
+            padding: 40px;
+            backdrop-filter: blur(20px);
+            transition: 0.4s;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+        .card i {
+            font-size: 40px;
+            color: #a855f7;
+            margin-bottom: 16px;
+            text-shadow: 0 0 10px #a855f744;
+        }
+        .card:hover {
+            transform: translateY(-12px) scale(1.03);
+            border-color: #a855f7;
+            box-shadow: 0 0 50px #a855f744;
+        }
+        .card h3 {
+            color: #f3e8ff;
+            margin-bottom: 16px;
+            font-size: 22px;
+        }
+        .card p {
+            color: #a1a1aa;
+            line-height: 1.7;
+        }
+        /* Testimonials section */
+        .testimonials {
+            padding: 80px 12%;
+            background: rgba(7, 3, 18, 0.5);
+            text-align: center;
+        }
+        .testimonials h2 {
+            font-size: 48px;
+            margin-bottom: 40px;
+            background: linear-gradient(90deg, #ffffff, #c084fc, #a855f7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        .testimonial {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: left;
+        }
+        .testimonial p {
+            color: #d4d4d8;
+            font-style: italic;
+            margin-bottom: 20px;
+        }
+        .testimonial .author {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .testimonial .author i {
+            font-size: 40px;
+            color: #a855f7;
+        }
+        .testimonial .author span {
+            color: #9ca3af;
+        }
+        /* FAQ section */
+        .faq {
+            padding: 80px 12%;
+            text-align: center;
+        }
+        .faq h2 {
+            font-size: 48px;
+            margin-bottom: 40px;
+            background: linear-gradient(90deg, #ffffff, #c084fc, #a855f7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .faq-item {
+            max-width: 800px;
+            margin: 0 auto 20px;
+            text-align: left;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 16px;
+            padding: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+        }
+        .faq-item h3 {
+            font-size: 20px;
+            margin-bottom: 10px;
+            color: #e9d5ff;
+        }
+        .faq-item p {
+            color: #9ca3af;
+        }
+        /* Divider with enhanced glow */
+        .divider {
+            width: 80%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #ffffff, #9333ea, #c026d3, transparent);
+            margin: 50px auto;
+            opacity: 0.5;
+            box-shadow: 0 0 30px #9333ea;
+        }
+        /* Footer with social links */
+        footer {
+            text-align: center;
+            padding: 80px 20px;
+            color: #6b7280;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            font-size: 14px;
+        }
+        .social-links {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+        .social-links a {
+            color: #9ca3af;
+            font-size: 24px;
+            transition: 0.3s;
+        }
+        .social-links a:hover {
+            color: #a855f7;
+            text-shadow: 0 0 15px #a855f7;
+        }
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 56px;
+            }
+            .buttons {
+                flex-direction: column;
+                gap: 16px;
+            }
+            nav {
+                flex-direction: column;
+                gap: 24px;
+            }
+            nav div {
+                display: flex;
+                gap: 24px;
+            }
+            .stats {
+                flex-direction: column;
+                gap: 30px;
+            }
+        }
+    </style>
+    <script>
+        // Simple particle generator
+        function createParticles() {
+            const particlesContainer = document.querySelector('.particles');
+            for (let i = 0; i < 50; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                particle.style.width = `${Math.random() * 3 + 1}px`;
+                particle.style.height = particle.style.width;
+                particle.style.left = `${Math.random() * 100}vw`;
+                particle.style.animationDuration = `${Math.random() * 10 + 10}s`;
+                particle.style.animationDelay = `${Math.random() * 5}s`;
+                particlesContainer.appendChild(particle);
+            }
+        }
+        window.addEventListener('load', createParticles);
+    </script>
 </head>
 <body>
-
-<div class="bg-glow"></div>
-
-<nav>
-
-<div class="logo">PurpleExec</div>
-
-<div>
-<a href="#">Home</a>
-<a href="#">Docs</a>
-<a href="https://kirbycunningham-png.github.io/Hi/Ascendify.exe">Download</a>
-</div>
-
-</nav>
-
-
-<section class="hero">
-
-<h1>Next Generation Executor</h1>
-
-<p>Fast • Keyless • Clean UI</p>
-
-<div class="buttons">
-
-<a class="download" href="https://kirbycunningham-png.github.io/Hi/Ascendify.exe">Download</a>
-
-<a class="discord" href="#">Join Discord</a>
-
-</div>
-
-</section>
-
-
-<section class="features">
-
-<div class="card">
-<h3>Fast Injection</h3>
-<p>Attach instantly with optimized execution engine.</p>
-</div>
-
-<div class="card">
-<h3>Keyless</h3>
-<p>No annoying keys or ads before using the executor.</p>
-</div>
-
-<div class="card">
-<h3>Script Hub</h3>
-<p>Run popular scripts with one click.</p>
-</div>
-
-<div class="card">
-<h3>Frequent Updates</h3>
-<p>Updated quickly whenever Roblox patches.</p>
-</div>
-
-</section>
-
-<footer>
-
-© 2026 Purple Executor
-
-</footer>
-
+    <div class="background"></div>
+    <div class="particles"></div>
+    <div class="blob blob1"></div>
+    <div class="blob blob2"></div>
+    <div class="blob blob3"></div>
+    <nav>
+        <div class="logo">Ascendify</div>
+        <div>
+            <a href="#home">Home</a>
+            <a href="#features">Features</a>
+            <a href="#docs">Docs</a>
+            <a href="https://kirbycunningham-png.github.io/Hi/Ascendify.exe">Download</a>
+            <a href="#support">Support</a>
+        </div>
+    </nav>
+    <section id="home" class="hero">
+        <h1>Ascendify Executor</h1>
+        <p>Experience the next generation of script execution. Packed with power, built for stability, and designed for you.</p>
+        <div class="buttons">
+            <a class="download" href="https://kirbycunningham-png.github.io/Hi/Ascendify.exe">Download Now</a>
+            <a class="discord" href="#">Join Discord</a>
+        </div>
+    </section>
+    <section class="stats">
+        <div class="stat">
+            <h2>98%</h2>
+            <p>UNC Support</p>
+        </div>
+        <div class="stat">
+            <h2>24/7</h2>
+            <p>Support Available</p>
+        </div>
+    </section>
+    <div class="divider"></div>
+    <section id="features" class="features">
+        <div class="card">
+            <i class="fas fa-bolt"></i>
+            <h3>Ultra-Fast Injection</h3>
+            <p>Attach instantly with our optimized execution engine for unmatched speed and reliability in every session.</p>
+        </div>
+        <div class="card">
+            <i class="fas fa-unlock"></i>
+            <h3>Completely Keyless</h3>
+            <p>No keys, no ads, no hassle – jump straight into scripting without any barriers.</p>
+        </div>
+        <div class="card">
+            <i class="fas fa-scroll"></i>
+            <h3>Integrated Script Hub</h3>
+            <p>Access and launch popular scripts directly from our built-in hub with one-click ease.</p>
+        </div>
+        <div class="card">
+            <i class="fas fa-sync-alt"></i>
+            <h3>Rapid Updates</h3>
+            <p>Stay ahead with lightning-fast updates whenever Roblox patches, ensuring continuous compatibility.</p>
+        </div>
+        <div class="card">
+            <i class="fas fa-shield-alt"></i>
+            <h3>Advanced Security</h3>
+            <p>Built-in anti-detection and secure execution to keep your account safe while scripting.</p>
+        </div>
+        <div class="card">
+            <i class="fas fa-code"></i>
+            <h3>Custom Lua Editor</h3>
+            <p>Syntax highlighting, auto-complete, and multi-tab support for professional scripting.</p>
+        </div>
+    </section>
+    <div class="divider"></div>
+    <section class="testimonials">
+        <h2>What Users Are Saying</h2>
+        <div class="testimonial-grid">
+            <div class="testimonial">
+                <p>"Ascendify is a game-changer! Fast, reliable, and no keys needed. Best executor I've used."</p>
+                <div class="author">
+                    <i class="fas fa-user-circle"></i>
+                    <span>RobloxPro2026</span>
+                </div>
+            </div>
+            <div class="testimonial">
+                <p>"The script hub is amazing, and updates are super quick. Highly recommend!"</p>
+                <div class="author">
+                    <i class="fas fa-user-circle"></i>
+                    <span>ScriptMaster</span>
+                </div>
+            </div>
+            <div class="testimonial">
+                <p>"Seamless performance and great support. Ascendify elevated my Roblox experience."</p>
+                <div class="author">
+                    <i class="fas fa-user-circle"></i>
+                    <span>GamerElite</span>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div class="divider"></div>
+    <section id="support" class="faq">
+        <h2>Frequently Asked Questions</h2>
+        <div class="faq-item">
+            <h3>Is Ascendify safe to use?</h3>
+            <p>Yes, with built-in anti-detection features and regular updates to bypass Roblox's security.</p>
+        </div>
+        <div class="faq-item">
+            <h3>Does it work on all devices?</h3>
+            <p>Ascendify is optimized for Windows, with mobile support coming soon.</p>
+        </div>
+        <div class="faq-item">
+            <h3>How do I get started?</h3>
+            <p>Download the executor, launch Roblox, attach, and execute your scripts!</p>
+        </div>
+        <div class="faq-item">
+            <h3>What if I encounter issues?</h3>
+            <p>Join our Discord for 24/7 support from the community and devs.</p>
+        </div>
+    </section>
+    <footer>
+        © 2026 Ascendify Executor • All rights reserved
+        <div class="social-links">
+            <a href="#"><i class="fab fa-discord"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-youtube"></i></a>
+        </div>
+    </footer>
 </body>
 </html>
