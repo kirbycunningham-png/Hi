@@ -520,7 +520,17 @@ const weeklyHashes = [
 "5c2dc1379f3dcd35f8bd8a22259b7e3d8739dddc5978b7faf6573b25e82b6d64",
 "01d381cedbe1963f088d3302dab9cfd233c7d6f2734e4103c9d117d93114e038",
 "0d94e6bc3abba8b5e4621c1e8b543ce32a89cd0a980563c9d004433908eb6f0f",
-"a161b1cac84f07f063fc70948f464de760fb23c6f4a669175b780e40dc088c64"
+"a161b1cac84f07f063fc70948f464de760fb23c6f4a669175b780e40dc088c64",
+"b23b80edbf69d869097ee01524a33f34970cf79ece1d0b8dedf60da2fb3f183e",
+"29a8211518438c34b18c58d40581d370382dde6830bcd3dc5b54c10c56bf5ffb",
+"224e8989a3a26c9a2118974ee429aa5f9188380085242284f541e16fa9efd297",
+"474e509a455590d8697b60cf90379f34c868cce0c8eacddc2d4190092b60f700",
+"0de836a57cee25af3aeba869c6ecffa6d898ebad0b467c7bca678ca1d571e7bc",
+"e8096b052934deb4f8158b4af96c5b6d90d61ffa5c80519d6948fdcf04463a09",
+"148c1f1504b698fd4fa86e59fe12591efcd8f93d038901fe0236e1aeb18e5996",
+"58a0b7a4c8e4d1f046f172191b35b7a93293e82a5e54e5d5d8acd31a1ed7ca3e",
+"2b636807e7320d494a7758c701e8c984840ca7a48e4c9f96912416b5c7c2ce5f",
+"cc02d415257345f2c554ef6f5d0e4204ebd0cc6165fe52aeee85d63e7ac9e02e"
 ];
 if (hashedKey === "9f467a5c3d13f39a67da61dc95d26c50895dda646b799dd0b7a8d140494d28f5") {
 expiration = Date.now() + (365 * 24 * 60 * 60 * 1000); // Year
@@ -598,6 +608,17 @@ el.style.transform = "rotateX(0deg) rotateY(0deg) scale(1)"
 )
 }
 )
+</script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Reset all used keys by clearing relevant localStorage items
+  for (let i = localStorage.length - 1; i >= 0; i--) {
+    const key = localStorage.key(i);
+    if (key.startsWith('ascendify_key_used_')) {
+      localStorage.removeItem(key);
+    }
+  }
+});
 </script>
 <script defer src="https://static.cloudflareinsights.com/beacon.min.js/v8c78df7c7c0f484497ecbca7046644da1771523124516" integrity="sha512-8DS7rgIrAmghBFwoOTujcf6D9rXvH8xm8JQ1Ja01h9QX8EzXldiszufYa4IFfKdLUKTTrnSFXLDkUEOTrZQ8Qg==" data-cf-beacon='{"version":"2024.11.0","token":"9facd51c1d6a4b7c9bab73662b7a712c","r":1,"server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
 </body></html>
