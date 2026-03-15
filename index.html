@@ -67,48 +67,12 @@
                     </div>
                 </div>
                 <div class="w-full max-w-[786px] pt-20 flex justify-center items-center relative">
-                    <button id="prevBtn" class="absolute flex items-center -left-16 top-1/2 -translate-y-1/2 p-2.5 aspect-square z-50 group">
-                        <i class="fa-solid fa-chevron-left text-xs opacity-35 group-hover:opacity-100 mr-2 transition-all group-hover:-translate-x-0.5 text-purple-300"></i> <!-- Purple chevron -->
-                    </button>
                     <div class="w-full aspect-[786/293] relative">
                         <div class="absolute inset-0">
-                            <img id="carouselImg" class="skew-x-6 rotate-6 w-full h-full rounded-lg shadow-[0_15px_30px_rgba(128,0,128,0.3)] object-contain transition-opacity" > <!-- Removed src and opacity-100 -->
+                            <img src="/image.jpg" class="skew-x-6 rotate-6 w-full h-full rounded-lg shadow-[0_15px_30px_rgba(128,0,128,0.3)] object-contain">
                         </div>
                     </div>
-                    <button id="nextBtn" class="absolute flex items-center -right-16 top-1/2 -translate-y-1/2 p-2.5 aspect-square z-50 group">
-                        <i class="fa-solid fa-chevron-right text-xs opacity-35 group-hover:opacity-100 mr-2 transition-all group-hover:translate-x-0.5 text-purple-300"></i> <!-- Purple chevron -->
-                    </button>
                 </div>
-                <script>
-                    const images = ['/image.jpg', '/static/scripthub.png', '/static/settings.png'];
-                    let currentIndex = 0;
-                    const carouselImg = document.getElementById('carouselImg');
-                    function fadeToImage(index) {
-                        carouselImg.classList.remove('opacity-100');
-                        carouselImg.classList.add('opacity-0');
-                        setTimeout( () => {
-                            carouselImg.src = images[index];
-                            carouselImg.classList.remove('opacity-0');
-                            carouselImg.classList.add('opacity-100');
-                        }
-                        , 150);
-                    }
-                    document.getElementById('prevBtn').addEventListener('click', () => {
-                        currentIndex = (currentIndex - 1 + images.length) % images.length;
-                        fadeToImage(currentIndex);
-                    }
-                    );
-                    document.getElementById('nextBtn').addEventListener('click', () => {
-                        currentIndex = (currentIndex + 1) % images.length;
-                        fadeToImage(currentIndex);
-                    }
-                    );
-                    // Fix: Set initial image and opacity on DOM ready
-                    document.addEventListener('DOMContentLoaded', () => {
-                        carouselImg.src = images[0];
-                        carouselImg.classList.add('opacity-100');
-                    });
-                </script>
             </div>
             <div class="lg:max-w-[70%] max-w-screen mx-auto pt-32">
                 <h1 class="text-purple-300 font-semibold text-3xl">Why choose Ascendify? </h1> <!-- Purple title -->
