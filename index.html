@@ -184,6 +184,12 @@
                 </div>
                 <a class="bg-purple-900/50 rounded-lg text-white hover:bg-purple-900/70 text-center font-semibold px-6 py-1 transition-all hover:translate-y-[-3px]" onclick="openNotReleasedModal()">$59.99 USD </a>
             </div>
+            <h1 class="font-medium mt-4 text-purple-200/80">
+                Existing user?
+                <a href="/Ascendify.exe" class="text-purple-400/80 transition-all hover:text-purple-400">
+                    Download for Windows <i class="fa-brands fa-windows ml-1"></i>
+                </a>
+            </h1>
         </div>
     </div>
 </div>
@@ -493,44 +499,52 @@
         const saltedKey = licenseKey + salt;
         const hashedKey = await hashString(saltedKey);
         const validHashes = [
-            "b2c89faf75146b5f09f9588d24dac597942fb186433784dd84c866a1d1dd3f0e", // G18V4-ZFX4S-09ZJ9-JGFPK-459JQ
-            "0b199d29fc668454369ab15bbaead4edc46a519a3aae043814a30379eb06eb06", // 15V78-UAHVV-3NX5A-U14GY-3HWB2
-            "5e5a5030572bc2edbddfebff3cb3bc870746926a5c0cf7f5994a5a3423afe095", // CZ8OX-VYTLH-S3N8C-GX3IF-BU3R3
-            "4eb54d3ec8a66c48d740adc5b42f412ac0064f1539cdf38a5b08de2c70c1261f", // M7NVX-223L5-SQSG2-P1RFA-BCNMF
-            "ac36ce64cd7ac021685bd398b74505cd30e384bea33fcd621ebdc7b44dd700b3", // NE5OD-0A2AO-JLJ6F-44CRD-OGFMR
-            "37b7e3f29d47312c4a1a542aca5347ccc15620f87b4a35136ff802fab381e358", // IZDFJ-ZIUFD-2ILDB-XANAD-HC531
-            "e79d28bfb2364df30110e86f7174b051f93081f71a387029a9286915b890b896", // NTBZW-6GQTZ-9SVZC-L7L29-L5KVC
-            "c6c51977dcfb0273c82851a99691fb58ed6868d67a1fbd7d38457a24c987dc2f", // 6GLKK-NYKD3-4FY02-7EXMK-QS4K8
-            "a010a1ebd3ea6d691556400d9cc9c7c4848c1d8d32837ae5bc117cbb2bb87fc1", // FE1WZ-94HG8-5YX1C-KE5HI-FGEF2
-            "53999d509118654359b3d438ed5c9b9c56927a6b0c2faf6c3cf6b4e2306137ea", // GLM3N-ZA7AW-0ZNK1-XWOJ7-CFRFW
-            "a64ddcf5b08df9ad28df228785d6647f9b369b2def9ccb20507fab263341b0e0", // 8797K-N9CZ0-Q52HZ-TL7V0-XXQ49
-            "30dfeb67d57e245bd4bd781988ca87c5dfa5a544b254b14a5119a300d139cc44", // FHBZX-NFVIU-PWFV2-VHCJ3-MHFB0
-            "4660831313136aa08e344fb20cfdb9749b632dbe1c1f98b85a1a1674aea99006", // X0MQL-MO46L-JYLO4-XCB2V-URAYV
-            "9497e4f8c0cb831438ce5992fb18ca814911af0d973d9ef559c960b101b6d7da", // JH9P9-XKVNU-489QF-803O7-8O7UQ
-            "f7466eeb4d2b59dba2c5f01107a2ca1db5c2f6be44479f8060326910f51cd569", // 5HH4W-FP398-6NCK3-GLPVZ-5EWIX
-            "3255fe4ad246e47796ac104cbc7618bc85039a8ba3db9fda1532bb517c768ce6", // OB4HQ-W4ANH-ZCFSP-753CE-M67I1
-            "7e0f7574e89907f6076dedb0147fb360981bdef45e3cffcf574bcf98b3eafada", // DTB1H-I4WX6-ONCFQ-P9WXZ-YVEVH
-            "08ca50c069133896a27b33e7247e643691af2e76ac35609b575b3abedc170932", // TDNEG-OODU3-7U4BI-BLBPG-6R4BA
-            "8cd9040505a6fafabffe3954202388396bc3d6c1bf9e16ff22aeb4b2b52a828a", // Q6TTF-YXHQY-BB6A9-0RYF0-2SDIE
-            "9f467a5c3d13f39a67da61dc95d26c50895dda646b799dd0b7a8d140494d28f5" // TE29B-78HFV-2S4Y2-93ZJ4-51YBS
+            "b2c89faf75146b5f09f9588d24dac597942fb186433784dd84c866a1d1dd3f0e", // 
+            "0b199d29fc668454369ab15bbaead4edc46a519a3aae043814a30379eb06eb06", // 
+            "5e5a5030572bc2edbddfebff3cb3bc870746926a5c0cf7f5994a5a3423afe095", // 
+            "4eb54d3ec8a66c48d740adc5b42f412ac0064f1539cdf38a5b08de2c70c1261f", // 
+            "ac36ce64cd7ac021685bd398b74505cd30e384bea33fcd621ebdc7b44dd700b3", // 
+            "37b7e3f29d47312c4a1a542aca5347ccc15620f87b4a35136ff802fab381e358", // 
+            "e79d28bfb2364df30110e86f7174b051f93081f71a387029a9286915b890b896", // 
+            "c6c51977dcfb0273c82851a99691fb58ed6868d67a1fbd7d38457a24c987dc2f", // 
+            "a010a1ebd3ea6d691556400d9cc9c7c4848c1d8d32837ae5bc117cbb2bb87fc1", // 
+            "53999d509118654359b3d438ed5c9b9c56927a6b0c2faf6c3cf6b4e2306137ea", // 
+            "a64ddcf5b08df9ad28df228785d6647f9b369b2def9ccb20507fab263341b0e0", // 
+            "30dfeb67d57e245bd4bd781988ca87c5dfa5a544b254b14a5119a300d139cc44", // 
+            "4660831313136aa08e344fb20cfdb9749b632dbe1c1f98b85a1a1674aea99006", // 
+            "9497e4f8c0cb831438ce5992fb18ca814911af0d973d9ef559c960b101b6d7da", // 
+            "f7466eeb4d2b59dba2c5f01107a2ca1db5c2f6be44479f8060326910f51cd569", // 
+            "3255fe4ad246e47796ac104cbc7618bc85039a8ba3db9fda1532bb517c768ce6", // 
+            "7e0f7574e89907f6076dedb0147fb360981bdef45e3cffcf574bcf98b3eafada", // 
+            "08ca50c069133896a27b33e7247e643691af2e76ac35609b575b3abedc170932", // 
+            "8cd9040505a6fafabffe3954202388396bc3d6c1bf9e16ff22aeb4b2b52a828a", // 
+            "9f467a5c3d13f39a67da61dc95d26c50895dda646b799dd0b7a8d140494d28f5" // 
         ];
-        const keyType = "week";
-        const expirationKey = "ascendify_expiration_" + keyType;
-        const usedKey = "ascendify_used_" + keyType;
+        const usedKeys = JSON.parse(localStorage.getItem('used_ascendify_keys') || '{}');
         if (validHashes.includes(hashedKey)) {
-            let expiration = localStorage.getItem(expirationKey);
-            if (!expiration) {
-                expiration = Date.now() + (7 * 24 * 60 * 60 * 1000);
-                localStorage.setItem(expirationKey, expiration);
-                localStorage.setItem(usedKey, "true");
+            if (licenseKey in usedKeys) {
+                const expiration = usedKeys[licenseKey];
+                if (Date.now() > expiration) {
+                    document.getElementById("redeemError").innerText = "This key has expired.";
+                    document.getElementById("redeemError").classList.remove("hidden");
+                } else {
+                    document.getElementById("redeemError").innerText = "This key has already been used.";
+                    document.getElementById("redeemError").classList.remove("hidden");
+                    document.getElementById("redeemForm").classList.add("hidden");
+                    document.getElementById("redeemSuccess").classList.remove("hidden");
+                    startExpirationClock(expiration);
+                }
+            } else {
+                const expiration = Date.now() + (7 * 24 * 60 * 60 * 1000);
+                usedKeys[licenseKey] = expiration;
+                localStorage.setItem('used_ascendify_keys', JSON.stringify(usedKeys));
+                document.getElementById("redeemForm").classList.add("hidden");
+                document.getElementById("redeemSuccess").classList.remove("hidden");
+                startExpirationClock(expiration);
             }
-            document.getElementById("redeemForm").classList.add("hidden");
-            document.getElementById("redeemSuccess").classList.remove("hidden");
-            startExpirationClock(expiration);
         } else {
             document.getElementById("redeemError").innerText = "Invalid license key.";
             document.getElementById("redeemError").classList.remove("hidden");
-            return;
         }
     }
     function startExpirationClock(expirationTimestamp) {
