@@ -160,28 +160,28 @@
                     <h1 class="text-white font-semibold text-xl">Ascendify Weekly </h1>
                     <a class="text-purple-200/80 text-md mb-6 block">One-week access to Ascendify</a>
                 </div>
-                <a class="bg-purple-900/50 rounded-lg text-white hover:bg-purple-900/70 text-center font-semibold px-6 py-1 transition-all hover:translate-y-[-3px]" onclick="openWidget('weekly')">$5.99 USD </a> <!-- Purple button -->
+                <a class="bg-purple-900/50 rounded-lg text-white hover:bg-purple-900/70 text-center font-semibold px-6 py-1 transition-all hover:translate-y-[-3px]" onclick="openNotReleasedModal()">$5.99 USD </a> <!-- Purple button -->
             </div>
             <div style="transition: 0.15s ease-out; min-height: 200px;" class="rot bg-purple-950/20 rounded-lg hover:bg-purple-950/30 backdrop-blur-sm transition-all flex flex-col p-10 justify-between">
                 <div>
                     <h1 class="text-white font-semibold text-xl">Ascendify Monthly </h1>
                     <a class="text-purple-200/80 text-md mb-6 block">One-month access to Ascendify</a>
                 </div>
-                <a class="bg-purple-900/50 rounded-lg text-white hover:bg-purple-900/70 text-center font-semibold px-6 py-1 transition-all hover:translate-y-[-3px]" onclick="openWidget('monthly')">$16.99 USD </a>
+                <a class="bg-purple-900/50 rounded-lg text-white hover:bg-purple-900/70 text-center font-semibold px-6 py-1 transition-all hover:translate-y-[-3px]" onclick="openNotReleasedModal()">$16.99 USD </a>
             </div>
             <div style="transition: 0.15s ease-out; min-height: 200px;" class="rot bg-purple-950/20 rounded-lg hover:bg-purple-950/30 backdrop-blur-sm transition-all flex flex-col p-10 justify-between">
                 <div>
                     <h1 class="text-white font-semibold text-xl">Ascendify Quarterly </h1>
                     <a class="text-purple-200/80 text-md mb-6 block">Three-month access to Ascendify</a>
                 </div>
-                <a class="bg-purple-900/50 rounded-lg text-white hover:bg-purple-900/70 text-center font-semibold px-6 py-1 transition-all hover:translate-y-[-3px]" onclick="openWidget('quarterly')">$39.99 USD </a>
+                <a class="bg-purple-900/50 rounded-lg text-white hover:bg-purple-900/70 text-center font-semibold px-6 py-1 transition-all hover:translate-y-[-3px]" onclick="openNotReleasedModal()">$39.99 USD </a>
             </div>
             <div style="transition: 0.15s ease-out; min-height: 200px;" class="rot bg-purple-950/20 rounded-lg hover:bg-purple-950/30 backdrop-blur-sm transition-all flex flex-col p-10 justify-between">
                 <div>
                     <h1 class="text-white font-semibold text-xl">Ascendify Yearly </h1>
                     <a class="text-purple-200/80 text-md mb-6 block">One-year access to Ascendify</a>
                 </div>
-                <a class="bg-purple-900/50 rounded-lg text-white hover:bg-purple-900/70 text-center font-semibold px-6 py-1 transition-all hover:translate-y-[-3px]" onclick="openWidget('yearly')">$59.99 USD </a>
+                <a class="bg-purple-900/50 rounded-lg text-white hover:bg-purple-900/70 text-center font-semibold px-6 py-1 transition-all hover:translate-y-[-3px]" onclick="openNotReleasedModal()">$59.99 USD </a>
             </div>
             <h1 class="font-medium mt-4 text-purple-200/80">
                 Existing user?
@@ -230,6 +230,20 @@
             <p class="text-white mb-1">Thank you for purchasing Ascendify!</p>
             <p class="text-sm text-purple-200/80 mb-4">Once the payment is complete, you will recieve the key in the email provided.</p>
             <button onclick="done()" class="ml-auto rounded-lg bg-purple-600 text-center font-semibold text-white px-6 py-1 transition-all hover:bg-purple-700 hover:translate-y-[-3px]">Done </button> <!-- Purple button -->
+        </div>
+    </div>
+    <div id="notReleasedModal" class="animate-[scaleFadeIn_0.1s] rounded-lg hidden overflow-hidden bg-[#100020] shadow-2xl p-6"> <!-- Purple-tinted modal bg -->
+        <div class="flex justify-between items-center mb-4">
+            <h2 class="text-left text-lg font-medium text-purple-300">Ascendify Update</h2>
+            <button onclick="closeNotReleasedModal()" class="text-purple-200 hover:text-purple-300 transition-all">
+                <i class="fa-solid fa-times text-xl"></i>
+            </button>
+        </div>
+        <div class="text-center">
+            <i class="fa-solid fa-exclamation-triangle text-purple-400 text-5xl mb-4"></i>
+            <p class="text-white text-xl font-semibold mb-2">Ascendify Isn't Released Yet</p>
+            <p class="text-purple-200/80 text-md mb-6">We're working hard to bring you the best scripting utility for Roblox. Stay tuned for the official release!</p>
+            <a href="/discord" class="inline-block bg-purple-600 rounded-lg font-semibold text-white px-6 py-2 transition-all hover:bg-purple-700 hover:-translate-y-1">Join Discord for Updates</a>
         </div>
     </div>
 </div>
@@ -378,6 +392,26 @@
     }
     function capitalize(str) {
         return str.charAt(0).toUpperCase() + str.slice(1);
+    }
+    function openNotReleasedModal() {
+        const modal = document.getElementById("notReleasedModal");
+        const overlay = document.getElementById("overlay");
+        modal.classList.remove("hidden");
+        overlay.classList.remove("hidden");
+        document.body.style.overflow = "hidden";
+        document.addEventListener("wheel", preventScroll, { passive: false });
+        document.addEventListener("touchmove", preventScroll, { passive: false });
+        document.addEventListener("keydown", preventArrowScroll);
+    }
+    function closeNotReleasedModal() {
+        const modal = document.getElementById("notReleasedModal");
+        const overlay = document.getElementById("overlay");
+        modal.classList.add("hidden");
+        overlay.classList.add("hidden");
+        document.body.style.overflow = "";
+        document.removeEventListener("wheel", preventScroll, { passive: false });
+        document.removeEventListener("touchmove", preventScroll, { passive: false });
+        document.removeEventListener("keydown", preventArrowScroll);
     }
 </script>
 </div><script>
