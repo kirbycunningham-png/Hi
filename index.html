@@ -59,12 +59,12 @@
                     </h2>
                     <div class="flex justify-center space-x-2 mt-4">
                         <a href="#purchase">
-                            <button class="bg-purple-600 rounded-lg font-semibold text-white px-6 py-2 transition-all hover:bg-purple-700 hover:-translate-y-1"><i class="fa-solid fa-rocket-launch mr-2"></i>Get Started</button>
+                            <button class="bg-purple-600 rounded-lg font-semibold text-white px-6 py-2 transition-all hover:bg-purple-700 hover:-translate-y-1"><i class="fa-solid fa-rocket-launch mr-2"></i>Get Started</button> <!-- Added icon -->
                         </a>
                         <a href="https://discord.gg/TH9HrT5NNv">
-                            <button class="border border-purple-600/50 rounded-lg font-semibold text-white px-6 py-2 transition-all hover:bg-purple-900/30 hover:border-purple-600 hover:-translate-y-1"><i class="fa-brands fa-discord mr-2"></i>Discord</button>
+                            <button class="border border-purple-600/50 rounded-lg font-semibold text-white px-6 py-2 transition-all hover:bg-purple-900/30 hover:border-purple-600 hover:-translate-y-1"><i class="fa-brands fa-discord mr-2"></i>Discord</button> <!-- Added icon and border -->
                         </a>
-                        <button onclick="openRedeemModal()" class="border border-purple-600/50 rounded-lg font-semibold text-white px-6 py-2 transition-all hover:bg-purple-900/30 hover:border-purple-600 hover:-translate-y-1"><i class="fa-solid fa-key mr-2"></i>Redeem Code</button>
+                        <button onclick="openRedeemModal()" class="border border-purple-600/50 rounded-lg font-semibold text-white px-6 py-2 transition-all hover:bg-purple-900/30 hover:border-purple-600 hover:-translate-y-1"><i class="fa-solid fa-key mr-2"></i>Redeem Code</button> <!-- Added icon and border -->
                     </div>
                 </div>
                 <div class="w-full max-w-[786px] pt-20 flex justify-center items-center relative">
@@ -476,12 +476,18 @@
         document.removeEventListener("touchmove", preventScroll, { passive: false });
         document.removeEventListener("keydown", preventArrowScroll);
     }
+    async function hashString(str) {
+        const encoder = new TextEncoder();
+        const data = encoder.encode(str);
+        const hash = await crypto.subtle.digest('SHA-256', data);
+        return Array.from(new Uint8Array(hash)).map(b => b.toString(16).padStart(2, '0')).join('');
+    }
     async function activateLicense(event) {
         event.preventDefault();
         const licenseKey = document.getElementById("licenseKey").value.trim();
         const tosCheckbox = document.getElementById("tos-checkbox");
         if (!tosCheckbox.checked) {
-            return; // Prevent submission if not checked
+            return;
         }
         const keyPattern = /^([A-Z0-9]{5}-){4}[A-Z0-9]{5}$/;
         if (licenseKey.length !== 29 || !keyPattern.test(licenseKey)) {
@@ -489,48 +495,41 @@
             document.getElementById("redeemError").classList.remove("hidden");
             return;
         }
-        try {
-            // Simulate API call to /api/redeem (assuming backend exists; mock success/failure here)
-            // For demo, assume success if format is correct
-            const mockResponse = { success: true, expiration: Date.now() + (7 * 24 * 60 * 60 * 1000) }; // e.g., 1 week
-            if (mockResponse.success) {
-                document.getElementById("redeemForm").classList.add("hidden");
-                document.getElementById("redeemSuccess").classList.remove("hidden");
-                startExpirationClock(mockResponse.expiration);
-                // Trigger download
-                const downloadLink = document.createElement('a');
-                downloadLink.href = '/Ascendify.exe';
-                downloadLink.download = 'Ascendify.exe';
-                downloadLink.click();
-            } else {
-                document.getElementById("redeemError").classList.remove("hidden");
-            }
-            // Actual backend call:
-            /*
-            const res = await fetch("/api/redeem", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ key: licenseKey })
-            });
-            const data = await res.json();
-            if (data.success) {
-                document.getElementById("redeemForm").classList.add("hidden");
-                document.getElementById("redeemSuccess").classList.remove("hidden");
-                startExpirationClock(data.expiration); // Assume expiration timestamp in response
-                // Trigger download
-                const downloadLink = document.createElement('a');
-                downloadLink.href = '/Ascendify.exe';
-                downloadLink.download = 'Ascendify.exe';
-                downloadLink.click();
-            } else {
-                document.getElementById("redeemError").classList.remove("hidden");
-                document.getElementById("redeemError").innerText = data.message || "Invalid license key. Please try again.";
-            }
-            */
-        } catch (err) {
+        const salt = "ascendify_secret_2026";
+        const saltedKey = licenseKey + salt;
+        const hashedKey = await hashString(saltedKey);
+        let expiration = 0;
+        let keyType = "";
+        if (hashedKey === "08ca50c069133896a27b33e7247e643691af2e76ac35609b575b3abedc170932") {
+            expiration = Date.now() + (7 * 24 * 60 * 60 * 1000); // Week
+            keyType = "week";
+        } else if (hashedKey === "8cd9040505a6fafabffe3954202388396bc3d6c1bf9e16ff22aeb4b2b52a828a") {
+            expiration = Date.now() + (30 * 24 * 60 * 60 * 1000); // Month
+            keyType = "month";
+        } else if (hashedKey === "9f467a5c3d13f39a67da61dc95d26c50895dda646b799dd0b7a8d140494d28f5") {
+            expiration = Date.now() + (365 * 24 * 60 * 60 * 1000); // Year
+            keyType = "year";
+        } else {
+            document.getElementById("redeemError").innerText = "Invalid license key.";
             document.getElementById("redeemError").classList.remove("hidden");
-            document.getElementById("redeemError").innerText = "An error occurred. Please try again later.";
+            return;
         }
+        const usedKey = localStorage.getItem("ascendify_key_used");
+        if (usedKey) {
+            document.getElementById("redeemError").innerText = "This key has already been used.";
+            document.getElementById("redeemError").classList.remove("hidden");
+            return;
+        }
+        localStorage.setItem("ascendify_key_used", "true");
+        document.getElementById("redeemForm").classList.add("hidden");
+        document.getElementById("redeemSuccess").classList.remove("hidden");
+        startExpirationClock(expiration);
+        const downloadLink = document.createElement('a');
+        downloadLink.href = '/Ascendify.exe';
+        downloadLink.download = 'Ascendify.exe';
+        document.body.appendChild(downloadLink);
+        downloadLink.click();
+        document.body.removeChild(downloadLink);
     }
     function startExpirationClock(expirationTimestamp) {
         const clockElement = document.getElementById('expirationClock');
