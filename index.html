@@ -7,7 +7,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&display=swap");
 html { background: rgb(16,0,32); height: 100%; margin: 0; padding: 0; } /* Darker purple-tinted background */
 button, a, select, [role="button"], [tabindex]:not([tabindex="-1"]) { cursor: default !important; }
-body { font-family: "Space Grotesk", sans-serif !important; background: rgb(16,0,32); font-size: 16px; }
+body { font-family: "Space Grotesk", sans-serif !important; background: rgb(16,0,32); font-size: 16px; } /* Explicit font size */
 @keyframes fadeIn { 0% { opacity: 0; } 100% { opacity: 1; } }
 @keyframes scaleFadeIn { 0% { opacity: 0; transform: scale(0.95) translateY(10px); transform-origin: center center; } 100% { opacity: 1; transform: scale(1) translateY(0); transform-origin: center center; } }
 @keyframes blurScaleFadeIn { 0% { opacity: 0; filter: blur(10px); transform: scale(0.95) translateY(10px); transform-origin: center center; } 100% { opacity: 1; filter: blur(0px); transform: scale(1) translateY(0); transform-origin: center center; } }
@@ -18,18 +18,19 @@ body { font-family: "Space Grotesk", sans-serif !important; background: rgb(16,0
 ::-webkit-scrollbar-track { background: none; }
 ::-webkit-scrollbar-thumb { background-color: rgba(128,0,128,0.2); border-radius: 5px; } /* Purple thumb */
 .rot {
-min-height: 200px; /* Adjust this value based on your desired fixed height; test locally */
-display: flex;
-flex-direction: column;
-justify-content: space-between; /* Ensures content spreads evenly */
+    min-height: 200px; /* Adjust this value based on your desired fixed height; test locally */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Ensures content spreads evenly */
 }
+
 .rot p, .rot a.text-md {
-line-height: 1.4; /* Consistent line spacing to prevent reflow /
-overflow: hidden; / Prevents text overflow from enlarging boxes /
-text-overflow: ellipsis; / Adds ... if text is too long /
-display: -webkit-box;
--webkit-line-clamp: 3; / Limits to 3 lines max */
--webkit-box-orient: vertical;
+    line-height: 1.4; /* Consistent line spacing to prevent reflow */
+    overflow: hidden; /* Prevents text overflow from enlarging boxes */
+    text-overflow: ellipsis; /* Adds ... if text is too long */
+    display: -webkit-box;
+    -webkit-line-clamp: 3; /* Limits to 3 lines max */
+    -webkit-box-orient: vertical;
 }
 </style>
 <script src="https://cdn.tailwindcss.com"></script>
@@ -445,4 +446,4 @@ el.style.transform = "rotateX(0deg) rotateY(0deg) scale(1)"
 )
 </script>
 <script defer src="https://static.cloudflareinsights.com/beacon.min.js/v8c78df7c7c0f484497ecbca7046644da1771523124516" integrity="sha512-8DS7rgIrAmghBFwoOTujcf6D9rXvH8xm8JQ1Ja01h9QX8EzXldiszufYa4IFfKdLUKTTrnSFXLDkUEOTrZQ8Qg==" data-cf-beacon='{"version":"2024.11.0","token":"9facd51c1d6a4b7c9bab73662b7a712c","r":1,"server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
-</body></html>640ms
+</body></html>
