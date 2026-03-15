@@ -72,7 +72,7 @@
                     </button>
                     <div class="w-full aspect-[786/293] relative">
                         <div class="absolute inset-0">
-                            <img id="carouselImg" src="/static/ui.png" class="skew-x-6 rotate-6 w-full h-full rounded-lg shadow-[0_15px_30px_rgba(128,0,128,0.3)] object-contain transition-opacity opacity-100"> <!-- Purple shadow -->
+                            <img id="carouselImg" class="skew-x-6 rotate-6 w-full h-full rounded-lg shadow-[0_15px_30px_rgba(128,0,128,0.3)] object-contain transition-opacity" > <!-- Removed src and opacity-100 -->
                         </div>
                     </div>
                     <button id="nextBtn" class="absolute flex items-center -right-16 top-1/2 -translate-y-1/2 p-2.5 aspect-square z-50 group">
@@ -80,7 +80,7 @@
                     </button>
                 </div>
                 <script>
-                    const images = ['/image.jpg', '/static/scripthub.png', '/static/settings.png'];
+                    const images = ['/static/ui.png', '/static/scripthub.png', '/static/settings.png'];
                     let currentIndex = 0;
                     const carouselImg = document.getElementById('carouselImg');
                     function fadeToImage(index) {
@@ -103,9 +103,10 @@
                         fadeToImage(currentIndex);
                     }
                     );
-                    // Fix: Ensure initial image is visible on load
-                    window.addEventListener('load', () => {
-                        carouselImg.style.opacity = '1';
+                    // Fix: Set initial image and opacity on DOM ready
+                    document.addEventListener('DOMContentLoaded', () => {
+                        carouselImg.src = images[0];
+                        carouselImg.classList.add('opacity-100');
                     });
                 </script>
             </div>
