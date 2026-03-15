@@ -1,605 +1,417 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ascendify Executor</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        body {
-            font-family: Inter, sans-serif;
-            background: #070312;
-            color: white;
-            overflow-x: hidden;
-        }
-        /* Enhanced animated background with particles and blobs */
-        .background {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -2;
-            background: radial-gradient(circle at center, rgba(147, 51, 234, 0.1), transparent);
-        }
-        .blob {
-            position: absolute;
-            width: 600px;
-            height: 600px;
-            filter: blur(120px);
-            opacity: 0.45;
-            border-radius: 50%;
-            animation-duration: 20s;
-            animation-iteration-count: infinite;
-            animation-timing-function: ease-in-out;
-        }
-        .blob1 {
-            background: #7a3cff;
-            top: -200px;
-            left: -100px;
-            animation: float1 18s alternate;
-        }
-        .blob2 {
-            background: #c026d3;
-            bottom: -200px;
-            right: -100px;
-            animation: float2 20s alternate;
-        }
-        .blob3 {
-            background: #a855f7;
-            top: 50%;
-            left: 50%;
-            width: 400px;
-            height: 400px;
-            animation: float3 22s alternate;
-        }
-        @keyframes float1 {
-            0% { transform: translate(0, 0) rotate(0deg) scale(1); }
-            50% { transform: translate(150px, 100px) rotate(30deg) scale(1.1); }
-            100% { transform: translate(100px, 120px) rotate(45deg) scale(1); }
-        }
-        @keyframes float2 {
-            0% { transform: translate(0, 0) rotate(0deg) scale(1); }
-            50% { transform: translate(-150px, -100px) rotate(-30deg) scale(1.1); }
-            100% { transform: translate(-100px, -120px) rotate(-45deg) scale(1); }
-        }
-        @keyframes float3 {
-            0% { transform: translate(0, 0) scale(1); }
-            50% { transform: translate(50px, -50px) scale(1.2); }
-            100% { transform: translate(-50px, 50px) scale(1.1); }
-        }
-        /* Particle effect */
-        .particles {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            pointer-events: none;
-        }
-        .particle {
-            position: absolute;
-            background: #a855f7;
-            border-radius: 50%;
-            opacity: 0.3;
-            animation: particle-float 15s infinite linear;
-        }
-        @keyframes particle-float {
-            0% { transform: translateY(0); opacity: 0.3; }
-            100% { transform: translateY(-100vh); opacity: 0; }
-        }
-        /* Navbar with glow effects and added elements for less plain look */
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 26px 10%;
-            backdrop-filter: blur(10px);
-            background: rgba(7, 3, 18, 0.7);
-            position: sticky;
-            top: 0;
-            z-index: 10;
-            box-shadow: 0 4px 20px rgba(168, 85, 247, 0.2);
-        }
-        .logo-container {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-        .logo-icon {
-            font-size: 32px;
-            color: #a855f7;
-            text-shadow: 0 0 10px #a855f744;
-        }
-        .logo {
-            font-size: 28px;
-            font-weight: 800;
-            background: linear-gradient(90deg, #ffffff, #a855f7);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-shadow: 0 0 5px rgba(168, 85, 247, 0.5);
-        }
-        nav a {
-            color: #ccc;
-            text-decoration: none;
-            margin-left: 32px;
-            transition: 0.3s;
-            font-weight: 600;
-            position: relative;
-        }
-        nav a::after {
-            content: '';
-            position: absolute;
-            bottom: -4px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: #a855f7;
-            transition: 0.3s;
-        }
-        nav a:hover::after {
-            width: 100%;
-        }
-        nav a:hover {
-            color: white;
-            text-shadow: 0 0 15px #a855f7;
-        }
-        .nav-right {
-            display: flex;
-            align-items: center;
-            gap: 24px;
-        }
-        .nav-search {
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            padding: 8px 16px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .nav-search input {
-            background: transparent;
-            border: none;
-            color: #ccc;
-            outline: none;
-        }
-        .nav-search i {
-            color: #a855f7;
-        }
-        /* Hero section with enhanced animations, glow, and added subtitle for less plain top */
-        .hero {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            padding: 180px 20px 130px;
-            animation: fadeIn 1.8s ease-in-out;
-            position: relative;
-        }
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle, rgba(168, 85, 247, 0.15), transparent);
-            z-index: -1;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .hero h1 {
-            font-size: 80px;
-            font-weight: 800;
-            background: linear-gradient(90deg, #ffffff, #c084fc, #e879f9, #a855f7, #7a3cff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 12px;
-            text-shadow: 0 0 20px #a855f788;
-        }
-        .hero .subtitle {
-            font-size: 28px;
-            font-weight: 600;
-            color: #e9d5ff;
-            margin-bottom: 24px;
-            text-shadow: 0 0 10px #a855f744;
-            animation: textGlow 2s ease-in-out infinite alternate;
-        }
-        .hero p {
-            color: #b3b3b3;
-            font-size: 20px;
-            max-width: 650px;
-            margin-bottom: 40px;
-            background: linear-gradient(90deg, #ffffff, #c084fc, #e879f9, #a855f7);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-shadow: 0 0 10px #a855f744;
-            animation: textGlow 2s ease-in-out infinite alternate;
-        }
-        @keyframes textGlow {
-            from { text-shadow: 0 0 10px #a855f744; }
-            to { text-shadow: 0 0 20px #a855f788; }
-        }
-        .buttons {
-            display: flex;
-            gap: 20px;
-        }
-        .download, .discord {
-            padding: 20px 50px;
-            border-radius: 16px;
-            font-weight: 700;
-            text-decoration: none;
-            transition: 0.4s;
-            box-shadow: 0 0 40px rgba(147, 51, 234, 0.4);
-        }
-        .download {
-            background: linear-gradient(90deg, #ffffff, #9333ea, #c026d3, #a855f7);
-            color: #070312;
-        }
-        .download:hover {
-            transform: translateY(-6px) scale(1.06);
-            box-shadow: 0 0 80px #a855f7;
-        }
-        .discord {
-            border: 2px solid #9333ea;
-            color: #e9d5ff;
-        }
-        .discord:hover {
-            background: linear-gradient(90deg, #9333ea44, #c026d344);
-            transform: translateY(-6px) scale(1.06);
-            border-color: #c026d3;
-            box-shadow: 0 0 60px #9333ea;
-        }
-        /* Stats section - removed downloads and level 8 */
-        .stats {
-            display: flex;
-            justify-content: center;
-            gap: 60px;
-            padding: 60px 20px;
-            background: rgba(7, 3, 18, 0.5);
-            border-top: 1px solid rgba(168, 85, 247, 0.2);
-            border-bottom: 1px solid rgba(168, 85, 247, 0.2);
-        }
-        .stat {
-            text-align: center;
-        }
-        .stat h2 {
-            font-size: 48px;
-            background: linear-gradient(90deg, #ffffff, #a855f7, #e879f9);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        .stat p {
-            color: #9ca3af;
-            font-size: 16px;
-        }
-        /* Features grid with hover glow and icons */
-        .features {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 40px;
-            padding: 80px 12%;
-        }
-        .card {
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 24px;
-            padding: 40px;
-            backdrop-filter: blur(20px);
-            transition: 0.4s;
-            text-align: center;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-        }
-        .card i {
-            font-size: 40px;
-            color: #a855f7;
-            margin-bottom: 16px;
-            text-shadow: 0 0 10px #a855f744;
-        }
-        .card:hover {
-            transform: translateY(-12px) scale(1.03);
-            border-color: #a855f7;
-            box-shadow: 0 0 50px #a855f744;
-        }
-        .card h3 {
-            color: #f3e8ff;
-            margin-bottom: 16px;
-            font-size: 22px;
-        }
-        .card p {
-            color: #a1a1aa;
-            line-height: 1.7;
-        }
-        /* Testimonials section */
-        .testimonials {
-            padding: 80px 12%;
-            background: rgba(7, 3, 18, 0.5);
-            text-align: center;
-        }
-        .testimonials h2 {
-            font-size: 48px;
-            margin-bottom: 40px;
-            background: linear-gradient(90deg, #ffffff, #c084fc, #a855f7);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        .testimonial-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-        }
-        .testimonial {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            border-radius: 20px;
-            padding: 30px;
-            text-align: left;
-        }
-        .testimonial p {
-            color: #d4d4d8;
-            font-style: italic;
-            margin-bottom: 20px;
-        }
-        .testimonial .author {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .testimonial .author i {
-            font-size: 40px;
-            color: #a855f7;
-        }
-        .testimonial .author span {
-            color: #9ca3af;
-        }
-        /* FAQ section */
-        .faq {
-            padding: 80px 12%;
-            text-align: center;
-        }
-        .faq h2 {
-            font-size: 48px;
-            margin-bottom: 40px;
-            background: linear-gradient(90deg, #ffffff, #c084fc, #a855f7);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        .faq-item {
-            max-width: 800px;
-            margin: 0 auto 20px;
-            text-align: left;
-            background: rgba(255, 255, 255, 0.03);
-            border-radius: 16px;
-            padding: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.06);
-        }
-        .faq-item h3 {
-            font-size: 20px;
-            margin-bottom: 10px;
-            color: #e9d5ff;
-        }
-        .faq-item p {
-            color: #9ca3af;
-        }
-        /* Divider with enhanced glow */
-        .divider {
-            width: 80%;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, #ffffff, #9333ea, #c026d3, transparent);
-            margin: 50px auto;
-            opacity: 0.5;
-            box-shadow: 0 0 30px #9333ea;
-        }
-        /* Footer with social links */
-        footer {
-            text-align: center;
-            padding: 80px 20px;
-            color: #6b7280;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-            font-size: 14px;
-        }
-        .social-links {
-            margin-top: 20px;
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-        }
-        .social-links a {
-            color: #9ca3af;
-            font-size: 24px;
-            transition: 0.3s;
-        }
-        .social-links a:hover {
-            color: #a855f7;
-            text-shadow: 0 0 15px #a855f7;
-        }
-        @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 56px;
-            }
-            .hero .subtitle {
-                font-size: 22px;
-            }
-            .buttons {
-                flex-direction: column;
-                gap: 16px;
-            }
-            nav {
-                flex-direction: column;
-                gap: 24px;
-            }
-            nav div {
-                display: flex;
-                gap: 24px;
-            }
-            .stats {
-                flex-direction: column;
-                gap: 30px;
-            }
-            .nav-search {
-                width: 100%;
-                justify-content: center;
-            }
-        }
-    </style>
-    <script>
-        // Simple particle generator
-        function createParticles() {
-            const particlesContainer = document.querySelector('.particles');
-            for (let i = 0; i < 50; i++) {
-                const particle = document.createElement('div');
-                particle.classList.add('particle');
-                particle.style.width = `${Math.random() * 3 + 1}px`;
-                particle.style.height = particle.style.width;
-                particle.style.left = `${Math.random() * 100}vw`;
-                particle.style.animationDuration = `${Math.random() * 10 + 10}s`;
-                particle.style.animationDelay = `${Math.random() * 5}s`;
-                particlesContainer.appendChild(particle);
-            }
-        }
-        window.addEventListener('load', createParticles);
-    </script>
-</head>
-<body>
-    <div class="background"></div>
-    <div class="particles"></div>
-    <div class="blob blob1"></div>
-    <div class="blob blob2"></div>
-    <div class="blob blob3"></div>
-    <nav>
-        <div class="logo-container">
-            <i class="fas fa-rocket logo-icon"></i>
-            <div class="logo">Ascendify</div>
-        </div>
-        <div>
-            <a href="#home">Home</a>
-            <a href="#features">Features</a>
-            <a href="#docs">Docs</a>
-            <a href="https://kirbycunningham-png.github.io/Hi/Ascendify.exe">Download</a>
-            <a href="#support">Support</a>
-        </div>
-        <div class="nav-right">
-            <div class="nav-search">
-                <i class="fas fa-search"></i>
-                <input type="text" placeholder="Search...">
-            </div>
-        </div>
-    </nav>
-    <section id="home" class="hero">
-        <h1>Ascendify Executor</h1>
-        <div class="subtitle">Level Up Your Roblox Scripting Experience</div>
-        <p>Experience the next generation of script execution. Packed with power, built for stability, and designed for you.</p>
-        <div class="buttons">
-            <a class="download" href="https://ascendify.lol/Ascendify.exe">Download Now</a>
-            <a class="discord" href="https://discord.gg/cyBHwCHsNb">Join Discord</a>
-        </div>
-    </section>
-    <section class="stats">
-        <div class="stat">
-            <h2>98%</h2>
-            <p>UNC Support</p>
-        </div>
-        <div class="stat">
-            <h2>24/7</h2>
-            <p>Support Available</p>
-        </div>
-    </section>
-    <div class="divider"></div>
-    <section id="features" class="features">
-        <div class="card">
-            <i class="fas fa-bolt"></i>
-            <h3>Ultra-Fast Injection</h3>
-            <p>Attach instantly with our optimized execution engine for unmatched speed and reliability in every session.</p>
-        </div>
-        <div class="card">
-            <i class="fas fa-unlock"></i>
-            <h3>Completely Keyless</h3>
-            <p>No keys, no ads, no hassle – jump straight into scripting without any barriers.</p>
-        </div>
-        <div class="card">
-            <i class="fas fa-scroll"></i>
-            <h3>Integrated Script Hub</h3>
-            <p>Access and launch popular scripts directly from our built-in hub with one-click ease.</p>
-        </div>
-        <div class="card">
-            <i class="fas fa-sync-alt"></i>
-            <h3>Rapid Updates</h3>
-            <p>Stay ahead with lightning-fast updates whenever Roblox patches, ensuring continuous compatibility.</p>
-        </div>
-        <div class="card">
-            <i class="fas fa-shield-alt"></i>
-            <h3>Advanced Security</h3>
-            <p>Built-in anti-detection and secure execution to keep your account safe while scripting.</p>
-        </div>
-        <div class="card">
-            <i class="fas fa-code"></i>
-            <h3>Custom Lua Editor</h3>
-            <p>Syntax highlighting, auto-complete, and multi-tab support for professional scripting.</p>
-        </div>
-    </section>
-    <div class="divider"></div>
-    <section class="testimonials">
-        <h2>What Users Are Saying</h2>
-        <div class="testimonial-grid">
-            <div class="testimonial">
-                <p>"Ascendify is a game-changer! Fast, reliable, and no keys needed. Best executor I've used."</p>
-                <div class="author">
-                    <i class="fas fa-user-circle"></i>
-                    <span>RobloxPro2026</span>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=650">
+        <title>Vanta</title>
+        <link rel="stylesheet" href="/static/style.css">
+        <script src="https://cdn.tailwindcss.com"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+        <link rel="icon" type="image/x-icon" href="/static/icon.png">
+        <meta name="description" content="Vanta is a powerful client-sided LuaU scripting utility for ROBLOX.">
+        <meta name="keywords" content="roblox, scripting, coding, lua, luau">
+    </head>
+    <body class="text-white select-none animate-[fadeIn_0.3s]">
+        <div id="content" class="relative z-10 mx-12 lg:mx-0">
+            <header class="sticky top-0 z-20 w-full h-[80px]">
+                <div class="absolute inset-0 z-[-10] mx-auto max-w-screen lg:max-w-[75%]"></div>
+                <div id="hdr" class="absolute rounded-lg left-1/2 top-0 transform -translate-x-1/2 mt-1.5 py-1 mx-auto flex w-full max-w-screen lg:max-w-[75%] items-center transition-all">
+                    <div class="flex items-center flex-1">
+                        <img src="/static/icon.png" class="max-w-6 mr-4">
+                        <h1 class="text-white text-xl font-semibold">Vanta</h1>
+                    </div>
+                    <nav class="flex space-x-6 items-center justify-center">
+                        <a href="/" class="p-1 text-white text-lg font-medium transition-all hover:text-white/65">Home</a>
+                        <a href="#purchase" class="p-1 text-white text-lg font-medium transition-all hover:text-white/65">Purchase</a>
+                        <li class="p-1 group relative list-none">
+                            <a class="text-white text-lg transition-all font-medium group-hover:text-white/70 dropdown-toggle flex items-center">
+                                <i class="fa-solid fa-chevron-down text-xs mr-2 transition-all group-hover:rotate-180"></i>
+                                Legal 
+                            </a>
+                            <div class="p-1 rounded-lg space-y-0.5 absolute dropdown-menu backdrop-blur-sm hidden bg-white/10 text-sm text-white shadow overflow-hidden z-50 w-full min-w-max">
+                                <a class="block rounded-lg px-5 py-3 font-medium transition-all mb-1 hover:bg-white/20" href="/terms">Terms of Service</a>
+                                <a class="block rounded-lg px-5 py-3 font-medium transition-all mb-1 hover:bg-white/20" href="/privacy">Privacy Policy</a>
+                            </div>
+                        </li>
+                    </nav>
+                    <div class="flex-1"></div>
                 </div>
-            </div>
-            <div class="testimonial">
-                <p>"The script hub is amazing, and updates are super quick. Highly recommend!"</p>
-                <div class="author">
-                    <i class="fas fa-user-circle"></i>
-                    <span>ScriptMaster</span>
+            </header>
+            <div class="flex flex-col items-center justify-center mt-56 max-w-screen mx-auto text-center">
+                <div class="space-y-4">
+                    <h1 class="text-6xl font-bold">Robust execution</h1>
+                    <h2 class="text-xl text-white/50">
+                        Premium scripting utility for <span class="text-white font-bold">Roblox</span>
+                    </h2>
+                    <div class="flex justify-center space-x-2 mt-4">
+                        <a href="#purchase">
+                            <button class="bg-white rounded-lg font-semibold text-black px-6 py-2 transition-all hover:bg-white/75 hover:-translate-y-1">Get Started </button>
+                        </a>
+                        <a href="/discord">
+                            <button class="font-semibold rounded-lg text-white px-6 py-2 transition-all hover:bg-white/10 hover:-translate-y-1">Discord </button>
+                        </a>
+                    </div>
                 </div>
-            </div>
-            <div class="testimonial">
-                <p>"Seamless performance and great support. Ascendify elevated my Roblox experience."</p>
-                <div class="author">
-                    <i class="fas fa-user-circle"></i>
-                    <span>GamerElite</span>
+                <div class="w-full max-w-[786px] pt-20 flex justify-center items-center relative">
+                    <button id="prevBtn" class="absolute flex items-center -left-16 top-1/2 -translate-y-1/2 p-2.5 aspect-square z-50 group">
+                        <i class="fa-solid fa-chevron-left text-xs opacity-35 group-hover:opacity-100 mr-2 transition-all group-hover:-translate-x-0.5"></i>
+                    </button>
+                    <div class="w-full aspect-[786/293] relative">
+                        <div class="absolute inset-0">
+                            <img id="carouselImg" src="/static/ui.png" class="skew-x-6 rotate-6 w-full h-full rounded-lg shadow-[0_15px_30px_rgba(0,0,0,0.3)] object-contain transition-opacity opacity-100">
+                        </div>
+                    </div>
+                    <button id="nextBtn" class="absolute flex items-center -right-16 top-1/2 -translate-y-1/2 p-2.5 aspect-square z-50 group">
+                        <i class="fa-solid fa-chevron-right text-xs opacity-35 group-hover:opacity-100 mr-2 transition-all group-hover:translate-x-0.5"></i>
+                    </button>
                 </div>
+                <script>
+                    const images = ['/static/ui.png', '/static/scripthub.png', '/static/settings.png'];
+                    let currentIndex = 0;
+                    const carouselImg = document.getElementById('carouselImg');
+                    function fadeToImage(index) {
+                        carouselImg.classList.remove('opacity-100');
+                        carouselImg.classList.add('opacity-0');
+                        setTimeout( () => {
+                            carouselImg.src = images[index];
+                            carouselImg.classList.remove('opacity-0');
+                            carouselImg.classList.add('opacity-100');
+                        }
+                        , 150);
+                    }
+                    document.getElementById('prevBtn').addEventListener('click', () => {
+                        currentIndex = (currentIndex - 1 + images.length) % images.length;
+                        fadeToImage(currentIndex);
+                    }
+                    );
+                    document.getElementById('nextBtn').addEventListener('click', () => {
+                        currentIndex = (currentIndex + 1) % images.length;
+                        fadeToImage(currentIndex);
+                    }
+                    );
+                </script>
             </div>
+            <div class="lg:max-w-[70%] max-w-screen mx-auto pt-32">
+                <h1 class="text-white font-semibold text-3xl">Why choose Vanta? </h1>
+                <h1 class="text-white/75 text-xl">Here's why we're the best </h1>
+                <div class="grid lg:grid-cols-3 grid-cols-2 gap-2 w-full h-full mt-12 pb-24 items-stretch">
+                    <div style="transition: 0.15s ease-out;" class="rot rounded-lg bg-white/5 hover:bg-white/10 backdrop-blur-sm flex flex-col p-10 h-full">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-12 h-12 flex items-center justify-center">
+                                <i class="fa-solid fa-puzzle-piece text-white text-2xl"></i>
+                            </div>
+                            <a class="text-white text-2xl font-semibold">Highly supported</a>
+                        </div>
+                        <div class="mt-2">
+                            <p class="text-white/60 text-md">Designed for versatility, Vanta supports most script requirements to provide a seamless and stable user experience</p>
+                        </div>
+                    </div>
+                    <div style="transition: 0.15s ease-out;" class="rot rounded-lg bg-white/5 hover:bg-white/10 backdrop-blur-sm flex flex-col p-10 h-full">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-12 h-12 flex items-center justify-center">
+                                <i class="fa-brands fa-github text-white text-2xl"></i>
+                            </div>
+                            <a class="text-white text-2xl font-semibold">GitHub Integration</a>
+                        </div>
+                        <div class="mt-2">
+                            <p class="text-white/60 text-md ">Easily pull, push, and manage your scripts with GitHub integration</p>
+                        </div>
+                    </div>
+                    <div style="transition: 0.15s ease-out;" class="rot rounded-lg bg-white/5 hover:bg-white/10 backdrop-blur-sm flex flex-col p-10 h-full">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-12 h-12 flex items-center justify-center">
+                                <i class="fa-solid fa-fill-drip text-white text-2xl"></i>
+                            </div>
+                            <a class="text-white text-2xl font-semibold">Customization</a>
+                        </div>
+                        <div class="mt-2">
+                            <p class="text-white/60 text-md">Customize your Vanta experience with a wide range of options, from interface colors to button layouts.
+</a></div></div>
+<div style="transition: 0.15s ease-out;" class="rot rounded-lg bg-white/5 hover:bg-white/10 backdrop-blur-sm flex flex-col p-10 h-full">
+    <div class="flex items-center space-x-3">
+        <div class="w-12 h-12 flex items-center justify-center">
+            <i class="fa-solid fa-bolt text-white text-2xl"></i>
         </div>
-    </section>
-    <div class="divider"></div>
-    <section id="support" class="faq">
-        <h2>Frequently Asked Questions</h2>
-        <div class="faq-item">
-            <h3>Is Ascendify safe to use?</h3>
-            <p>Yes, with built-in anti-detection features and regular updates to bypass Roblox's security.</p>
+        <a class="text-white text-2xl font-semibold">Performance</a>
+    </div>
+    <div class="mt-2">
+        <p class="text-white/60 text-md">Optimized for smooth performance under heavy workloads, Vanta handles even the most demanding scripts with ease
+</a></div></div>
+<div style="transition: 0.15s ease-out;" class="rot rounded-lg bg-white/5 hover:bg-white/10 backdrop-blur-sm flex flex-col p-10 h-full">
+    <div class="flex items-center space-x-3">
+        <div class="w-12 h-12 flex items-center justify-center">
+            <i class="fa-solid fa-code text-white text-2xl"></i>
         </div>
-        <div class="faq-item">
-            <h3>Does it work on all devices?</h3>
-            <p>Ascendify is optimized for Windows, with mobile support coming soon.</p>
+        <a class="text-white text-2xl font-semibold">Code Diagnostics</a>
+    </div>
+    <div class="mt-2">
+        <p class="text-white/60 text-md">Vanta delivers an IDE-like experience with Monaco Editor integration and real-time code validation
+</a></div></div>
+<div style="transition: 0.15s ease-out;" class="rot rounded-lg bg-white/5 hover:bg-white/10 backdrop-blur-sm flex flex-col p-10 h-full">
+    <div class="flex items-center space-x-3">
+        <div class="w-12 h-12 flex items-center justify-center">
+            <i class="fa-solid fa-cloud text-white text-2xl"></i>
         </div>
-        <div class="faq-item">
-            <h3>How do I get started?</h3>
-            <p>Download the executor, launch Roblox, attach, and execute your scripts!</p>
+        <a class="text-white text-2xl font-semibold">Script Hub</a>
+    </div>
+    <div class="mt-2">
+        <a class="text-white/60 text-md font-medium">Vanta offers a fully integrated, standalone & fully moderated script hub that lets developers publish scripts directly from the interface</a>
+    </div>
+</div>
+</div></div>
+<div id="purchase" class="w-full transition-all duration-[250ms] pb-[100px]">
+    <div class="lg:max-w-[70%] max-w-screen w-full h-full items-center pt-12 justify-center mx-auto text-left">
+        <h1 class="text-white font-semibold text-3xl">Ready to get started? </h1>
+        <div class="flex items-center space-x-4 mt-2">
+            <h1 class="text-white/75 text-xl">We accept </h1>
+            <div class="flex items-center space-x-3">
+                <i class="fa-brands fa-bitcoin"></i>
+                <i class="fa-brands fa-ethereum"></i>
+                <i class="fa-brands fa-monero"></i>
+            </div>
+            <h1 class="text-white/75 font-semibold text-xl">and more </h1>
         </div>
-        <div class="faq-item">
-            <h3>What if I encounter issues?</h3>
-            <p>Join our Discord for 24/7 support from the community and devs.</p>
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-2 w-full h-full mt-12">
+            <div style="transition: 0.15s ease-out;" class="rot bg-white/5 rounded-lg hover:bg-white/10 backdrop-blur-sm transition-all flex flex-col p-10 h-full">
+                <h1 class="text-white font-semibold text-xl">Vanta Weekly </h1>
+                <a class="text-white/60 text-md mb-6">One-week access to Vanta</a>
+                <a class="bg-white/10 rounded-lg text-white hover:bg-white/20 text-center font-semibold px-6 py-1 transition-all hover:translate-y-[-3px]" onclick="openWidget('weekly')">$5.99 USD </a>
+            </div>
+            <div style="transition: 0.15s ease-out;" class="rot bg-white/5 rounded-lg hover:bg-white/10 backdrop-blur-sm transition-all flex flex-col p-10 h-full">
+                <h1 class="text-white font-semibold text-xl">Vanta Monthly </h1>
+                <a class="text-white/60 text-md mb-6">One-month access to Vanta</a>
+                <a class="bg-white/10 rounded-lg text-white hover:bg-white/20 text-center font-semibold px-6 py-1 transition-all hover:translate-y-[-3px]" onclick="openWidget('monthly')">$16.99 USD </a>
+            </div>
+            <div style="transition: 0.15s ease-out;" class="rot bg-white/5 rounded-lg hover:bg-white/10 backdrop-blur-sm transition-all flex flex-col p-10 h-full">
+                <h1 class="text-white font-semibold text-xl">Vanta Quarterly </h1>
+                <a class="text-white/60 text-md mb-6">Three-month access to Vanta</a>
+                <a class="bg-white/10 rounded-lg text-white hover:bg-white/20 text-center font-semibold px-6 py-1 transition-all hover:translate-y-[-3px]" onclick="openWidget('quarterly')">$39.99 USD </a>
+            </div>
+            <div style="transition: 0.15s ease-out;" class="rot bg-white/5 rounded-lg hover:bg-white/10 backdrop-blur-sm transition-all flex flex-col p-10 h-full">
+                <h1 class="text-white font-semibold text-xl">Vanta Yearly </h1>
+                <a class="text-white/60 text-md mb-6">One-year access to Vanta</a>
+                <a class="bg-white/10 rounded-lg text-white hover:bg-white/20 text-center font-semibold px-6 py-1 transition-all hover:translate-y-[-3px]" onclick="openWidget('yearly')">$59.99 USD </a>
+            </div>
+            <h1 class="font-medium mt-4 text-white/50">
+                Existing user? 
+                <a href="/static/Install Vanta.exe" class="text-blue-400/50 transition-all hover:text-blue-400">
+                    Download for Windows <i class="fa-brands fa-windows ml-1"></i>
+                </a>
+            </h1>
         </div>
-    </section>
-    <footer>
-        © 2026 Ascendify Executor • All rights reserved
-        <div class="social-links">
-            <a href="#"><i class="fab fa-discord"></i></a>
-            <a href="#"><i class="fab fa-twitter"></i></a>
-            <a href="#"><i class="fab fa-youtube"></i></a>
+    </div>
+</div>
+<div id="overlay" class="animate-[fadeIn_0.3s] fixed inset-0 bg-black bg-opacity-50 hidden z-[100]"></div>
+<div class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[110] w-full max-w-[450px]">
+    <div id="paymentWidget" class="animate-[scaleFadeIn_0.1s] rounded-lg hidden overflow-hidden bg-[#202020] shadow-2xl p-6">
+        <div class="flex">
+            <h2 class="mb-4 text-left text-lg font-medium" id="productTitle"></h2>
         </div>
-    </footer>
-</body>
-</html>
+        <div id="currencySection" class="block mt-4">
+            <form id="paymentForm" class="space-y-4 mt-4" onsubmit="createOrder(event)">
+                <div id="crypto" class="grid grid-cols-3 gap-2 mt-4"></div>
+                <div>
+                    <input type="email" id="email" required class="mt-1 w-full px-4 py-2 rounded-lg bg-white/5 border-white/5 transition-all hover:bg-white/10 outline-none placeholder-white/50 focus:bg-white/10 focus:ring-2 focus:ring-white focus:outline-none" placeholder="Enter your email">
+                </div>
+                <label class="flex items-center text-sm w-full">
+                    <input type="checkbox" class="peer hidden" required>
+                    <div class="w-5 h-5 bg-white/10 rounded-lg peer-checked:bg-white flex items-center justify-center transition-colors duration-200">
+                        <svg class="w-5 h-5 text-black opacity-0 peer-checked:opacity-100" fill="none" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
+                        </svg>
+                    </div>
+                    <span class="ml-3">
+                        I agree to the <a href="/terms" class="text-white/50 transition-all hover:text-white underline">Terms of Service</a>
+                        &amp;<a href="/privacy" class="text-white/50 transition-all hover:text-white underline">Privacy Policy</a>
+                    </span>
+                </label>
+                <div class="mt-6 flex">
+                    <button type="submit" class="ml-auto bg-white text-center rounded-lg font-semibold text-black px-6 py-1 transition-all hover:bg-white/75 hover:translate-y-[-3px]">Continue </button>
+                </div>
+            </form>
+        </div>
+        <div id="paySection" class="hidden">
+            <p class="text-sm text-white/50 mb-2" id="payInfo"></p>
+            <p class="text-white px-3 py-2 break-words bg-black/50 rounded-lg my-4" style="user-select: text !important;" id="paymentAddress">Waiting for address.. </p>
+            <button onclick="confirmPaid()" class="ml-auto bg-white text-center font-semibold text-black rounded-lg px-6 py-1 transition-all hover:bg-white/75 hover:translate-y-[-3px]">Done </button>
+        </div>
+        <div id="finalSection" class="hidden">
+            <p class="text-white mb-1">Thank you for purchasing Vanta!</p>
+            <p class="text-sm text-white/50 mb-4">Once the payment is complete, you will recieve the key in the email provided.</p>
+            <button onclick="done()" class="ml-auto rounded-lg bg-white text-center font-semibold text-black px-6 py-1 transition-all hover:bg-white/75 hover:translate-y-[-3px]">Done </button>
+        </div>
+    </div>
+</div>
+<script>
+    window.addEventListener('scroll', () => {
+        const header = document.getElementById("hdr")
+        if (window.scrollY > 1) {
+            header.classList.add("bg-white/5", "backdrop-blur-xl", "shadow", "px-8")
+        } else {
+            header.classList.remove("bg-white/5", "backdrop-blur-xl", "shadow", "px-8")
+        }
+    }
+    );
+    document.addEventListener('DOMContentLoaded', function() {
+        const dropdown = document.querySelector('.group');
+        const menu = dropdown.querySelector('.dropdown-menu');
+        dropdown.addEventListener('mouseenter', () => {
+            menu.classList.remove('hidden');
+        }
+        );
+        dropdown.addEventListener('mouseleave', () => {
+            menu.classList.add('hidden');
+        }
+        );
+    });
+    let walletMap = {};
+    let selectedCurrency = null;
+    let selectedProduct = null;
+    const productTitle = document.getElementById('productTitle');
+    const cryptoSelect = document.getElementById('crypto');
+    function showWidget() {
+        const modal = document.getElementById("paymentWidget");
+        const overlay = document.getElementById("overlay");
+        modal.classList.remove("hidden");
+        overlay.classList.remove("hidden");
+    }
+    function closeWidget() {
+        document.getElementById("paymentWidget").classList.add("hidden");
+        document.getElementById("overlay").classList.add("hidden");
+        document.body.style.overflow = "";
+        document.removeEventListener("wheel", preventScroll, {
+            passive: false
+        });
+        document.removeEventListener("touchmove", preventScroll, {
+            passive: false
+        });
+        document.removeEventListener("keydown", preventArrowScroll);
+    }
+    function preventScroll(e) {
+        e.preventDefault();
+    }
+    function preventArrowScroll(e) {
+        const keys = ["ArrowUp", "ArrowDown", "PageUp", "PageDown", "Home", "End", " "];
+        if (keys.includes(e.key)) {
+            e.preventDefault();
+        }
+    }
+    async function openWidget(productType) {
+        selectedProduct = productType;
+        productTitle.innerText = `Vanta ${capitalize(productType)}`;
+        try {
+            const res = await fetch("/api/payments/options");
+            const data = await res.json();
+            walletMap = data.options || {};
+            renderCurrencySelection();
+            showWidget();
+        } catch (err) {
+            alert("Failed to fetch crypto options");
+        }
+    }
+    function renderCurrencySelection() {
+        cryptoSelect.innerHTML = "";
+        Object.keys(walletMap).forEach(symbol => {
+            const box = document.createElement('div');
+            box.classList.add('currency-box', 'p-4', 'text-center', 'rounded-lg', 'bg-transparent', 'hover:bg-white/10', 'transition-all', 'flex', 'flex-col', 'items-center');
+            box.setAttribute('data-currency', symbol);
+            const icon = document.createElement('img');
+            icon.src = walletMap[symbol].imageUrl;
+            icon.alt = symbol;
+            icon.classList.add('w-10', 'h-10');
+            const text = document.createElement('p');
+            text.classList.add('text-sm', 'mt-3');
+            text.innerText = symbol.toUpperCase();
+            box.appendChild(icon);
+            box.appendChild(text);
+            box.addEventListener('click', () => selectCurrency(symbol, box));
+            cryptoSelect.appendChild(box);
+        }
+        );
+    }
+    function selectCurrency(symbol, box) {
+        const allBoxes = document.querySelectorAll('.currency-box');
+        allBoxes.forEach(b => b.classList.remove('ring-2', 'ring-white', 'bg-white/10'));
+        box.classList.add('ring-2', 'ring-white', 'bg-white/10');
+        selectedCurrency = symbol;
+    }
+    async function createOrder() {
+        event.preventDefault();
+        const email = document.getElementById("email").value;
+        const product = selectedProduct;
+        const crypto = selectedCurrency;
+        if (!selectedCurrency) {
+            alert("Please select a cryptocurrency.");
+            return;
+        }
+        try {
+            document.getElementById('currencySection').classList.add('hidden');
+            document.getElementById('paySection').classList.remove('hidden');
+            const res = await fetch("/api/payments/create", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    email: email,
+                    product: product,
+                    crypto: crypto
+                })
+            });
+            const rawRes = await res.text();
+            let responseData = null;
+            try {
+                responseData = JSON.parse(rawRes);
+            } catch (e) {}
+            if (responseData && responseData.pay_address && responseData.pay_amount) {
+                document.getElementById('paymentAddress').innerText = responseData.pay_address;
+                document.getElementById('payInfo').innerHTML = `
+            <p class="text-sm text-white/50 mb-2" id="payInfo">
+              Please pay exactly <span style="user-select: text !important;">
+                ${responseData.pay_amount}
+              </span> ${crypto} to the address shown below.
+            </p>`;
+            } else {
+                alert("Error: " + rawRes);
+            }
+        } catch (err) {
+            alert("Error: " + err.message);
+        }
+    }
+    function confirmPaid() {
+        document.getElementById('paySection').classList.add('hidden');
+        document.getElementById('finalSection').classList.remove('hidden');
+    }
+    function done() {
+        location.reload();
+    }
+    function capitalize(str) {
+        return str.charAt(0).toUpperCase() + str.slice(1);
+    }
+</script>
+</div><script>
+    const rotElements = document.querySelectorAll(".rot")
+    rotElements.forEach( (el) => {
+        el.addEventListener("mousemove", (event) => {
+            const rect = el.getBoundingClientRect()
+            const width = rect.width
+            const height = rect.height
+            const x = event.clientX - rect.left - width / 2
+            const y = event.clientY - rect.top - height / 2
+            const xPercent = x / (width / 2)
+            const yPercent = y / (height / 2)
+            const maxTilt = 8
+            const xRotate = yPercent * maxTilt
+            const yRotate = xPercent * -maxTilt
+            el.style.transform = `perspective(500px) rotateX(${xRotate}deg) rotateY(${yRotate}deg)`
+        }
+        )
+        el.addEventListener("mouseleave", () => {
+            el.style.transform = "rotateX(0deg) rotateY(0deg) scale(1)"
+        }
+        )
+    }
+    )
+</script>
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js/v8c78df7c7c0f484497ecbca7046644da1771523124516" integrity="sha512-8DS7rgIrAmghBFwoOTujcf6D9rXvH8xm8JQ1Ja01h9QX8EzXldiszufYa4IFfKdLUKTTrnSFXLDkUEOTrZQ8Qg==" data-cf-beacon='{"version":"2024.11.0","token":"9facd51c1d6a4b7c9bab73662b7a712c","r":1,"server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
+</body></html>
