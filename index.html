@@ -485,7 +485,7 @@
         }
         const keyPattern = /^([A-Z0-9]{5}-){4}[A-Z0-9]{5}$/;
         if (licenseKey.length !== 29 || !keyPattern.test(licenseKey)) {
-            document.getElementById("redeemError").innerText = "Invalid license key format. Must be 29 characters with dashes every 5 characters (e.g., XXXXX-XXXXX-XXXXX-XXXXX-XXXXX).";
+            document.getElementById("redeemError").innerText = "Invalid license key format.";
             document.getElementById("redeemError").classList.remove("hidden");
             return;
         }
