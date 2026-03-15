@@ -530,7 +530,8 @@ const weeklyHashes = [
 "148c1f1504b698fd4fa86e59fe12591efcd8f93d038901fe0236e1aeb18e5996",
 "58a0b7a4c8e4d1f046f172191b35b7a93293e82a5e54e5d5d8acd31a1ed7ca3e",
 "2b636807e7320d494a7758c701e8c984840ca7a48e4c9f96912416b5c7c2ce5f",
-"cc02d415257345f2c554ef6f5d0e4204ebd0cc6165fe52aeee85d63e7ac9e02e"
+"cc02d415257345f2c554ef6f5d0e4204ebd0cc6165fe52aeee85d63e7ac9e02e",
+"b2c89faf75146b5f09f9588d24dac597942fb186433784dd84c866a1d1dd3f0e"
 ];
 if (hashedKey === "9f467a5c3d13f39a67da61dc95d26c50895dda646b799dd0b7a8d140494d28f5") {
 expiration = Date.now() + (365 * 24 * 60 * 60 * 1000); // Year
@@ -546,13 +547,16 @@ document.getElementById("redeemError").innerText = "Invalid license key.";
 document.getElementById("redeemError").classList.remove("hidden");
 return;
 }
-const usedKey = localStorage.getItem("ascendify_key_used_" + keyType);
-if (usedKey) {
-document.getElementById("redeemError").innerText = "This key has already been used.";
-document.getElementById("redeemError").classList.remove("hidden");
-return;
+// Skip used check for weekly keys to allow multiple uses
+if (keyType !== "week") {
+  const usedKey = localStorage.getItem("ascendify_key_used_" + keyType);
+  if (usedKey) {
+    document.getElementById("redeemError").innerText = "This key has already been used.";
+    document.getElementById("redeemError").classList.remove("hidden");
+    return;
+  }
+  localStorage.setItem("ascendify_key_used_" + keyType, "true");
 }
-localStorage.setItem("ascendify_key_used_" + keyType, "true");
 document.getElementById("redeemForm").classList.add("hidden");
 document.getElementById("redeemSuccess").classList.remove("hidden");
 startExpirationClock(expiration);
@@ -608,17 +612,6 @@ el.style.transform = "rotateX(0deg) rotateY(0deg) scale(1)"
 )
 }
 )
-</script>
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-  // Reset all used keys by clearing relevant localStorage items
-  for (let i = localStorage.length - 1; i >= 0; i--) {
-    const key = localStorage.key(i);
-    if (key.startsWith('ascendify_key_used_')) {
-      localStorage.removeItem(key);
-    }
-  }
-});
 </script>
 <script defer src="https://static.cloudflareinsights.com/beacon.min.js/v8c78df7c7c0f484497ecbca7046644da1771523124516" integrity="sha512-8DS7rgIrAmghBFwoOTujcf6D9rXvH8xm8JQ1Ja01h9QX8EzXldiszufYa4IFfKdLUKTTrnSFXLDkUEOTrZQ8Qg==" data-cf-beacon='{"version":"2024.11.0","token":"9facd51c1d6a4b7c9bab73662b7a712c","r":1,"server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
 </body></html>
