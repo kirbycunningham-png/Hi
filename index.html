@@ -3,12 +3,26 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=650">
-        <title>Vanta</title>
-        <link rel="stylesheet" href="/static/style.css">
+        <title>Ascendify</title>
+        <style>
+            @import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&display=swap");
+            html { background: rgb(16,16,16); height: 100%; margin: 0; padding: 0; }
+            button, a, select, [role="button"], [tabindex]:not([tabindex="-1"]) { cursor: default !important; }
+            body { font-family: "Space Grotesk", sans-serif !important; background: rgb(16,16,16); }
+            @keyframes fadeIn { 0% { opacity: 0; } 100% { opacity: 1; } }
+            @keyframes scaleFadeIn { 0% { opacity: 0; transform: scale(0.95) translateY(10px); transform-origin: center center; } 100% { opacity: 1; transform: scale(1) translateY(0); transform-origin: center center; } }
+            @keyframes blurScaleFadeIn { 0% { opacity: 0; filter: blur(10px); transform: scale(0.95) translateY(10px); transform-origin: center center; } 100% { opacity: 1; filter: blur(0px); transform: scale(1) translateY(0); transform-origin: center center; } }
+            @keyframes scaleFadeOut { 0% { opacity: 1; transform: scale(1); transform-origin: center center; } 100% { opacity: 0; transform: scale(0.95) translateY(-10px); transform-origin: center center; } }
+            .group:hover .dropdown-menu { opacity: 1; visibility: visible; animation: scaleFadeIn 0.2s; }
+            .group:not(:hover) .dropdown-menu a { animation: scaleFadeOut 0.2s ease-out forwards; visibility: hidden; }
+            ::-webkit-scrollbar { border: none; margin: 15px; background-color: #101010; width: 5px; }
+            ::-webkit-scrollbar-track { background: none; }
+            ::-webkit-scrollbar-thumb { background-color: rgb(255,255,255,0.05); border-radius: 5px; }
+        </style>
         <script src="https://cdn.tailwindcss.com"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
         <link rel="icon" type="image/x-icon" href="/static/icon.png">
-        <meta name="description" content="Vanta is a powerful client-sided LuaU scripting utility for ROBLOX.">
+        <meta name="description" content="Ascendify is a powerful client-sided LuaU scripting utility for ROBLOX.">
         <meta name="keywords" content="roblox, scripting, coding, lua, luau">
     </head>
     <body class="text-white select-none animate-[fadeIn_0.3s]">
@@ -18,7 +32,7 @@
                 <div id="hdr" class="absolute rounded-lg left-1/2 top-0 transform -translate-x-1/2 mt-1.5 py-1 mx-auto flex w-full max-w-screen lg:max-w-[75%] items-center transition-all">
                     <div class="flex items-center flex-1">
                         <img src="/static/icon.png" class="max-w-6 mr-4">
-                        <h1 class="text-white text-xl font-semibold">Vanta</h1>
+                        <h1 class="text-white text-xl font-semibold">Ascendify</h1>
                     </div>
                     <nav class="flex space-x-6 items-center justify-center">
                         <a href="/" class="p-1 text-white text-lg font-medium transition-all hover:text-white/65">Home</a>
@@ -26,7 +40,7 @@
                         <li class="p-1 group relative list-none">
                             <a class="text-white text-lg transition-all font-medium group-hover:text-white/70 dropdown-toggle flex items-center">
                                 <i class="fa-solid fa-chevron-down text-xs mr-2 transition-all group-hover:rotate-180"></i>
-                                Legal 
+                                Legal
                             </a>
                             <div class="p-1 rounded-lg space-y-0.5 absolute dropdown-menu backdrop-blur-sm hidden bg-white/10 text-sm text-white shadow overflow-hidden z-50 w-full min-w-max">
                                 <a class="block rounded-lg px-5 py-3 font-medium transition-all mb-1 hover:bg-white/20" href="/terms">Terms of Service</a>
@@ -92,7 +106,7 @@
                 </script>
             </div>
             <div class="lg:max-w-[70%] max-w-screen mx-auto pt-32">
-                <h1 class="text-white font-semibold text-3xl">Why choose Vanta? </h1>
+                <h1 class="text-white font-semibold text-3xl">Why choose Ascendify? </h1>
                 <h1 class="text-white/75 text-xl">Here's why we're the best </h1>
                 <div class="grid lg:grid-cols-3 grid-cols-2 gap-2 w-full h-full mt-12 pb-24 items-stretch">
                     <div style="transition: 0.15s ease-out;" class="rot rounded-lg bg-white/5 hover:bg-white/10 backdrop-blur-sm flex flex-col p-10 h-full">
@@ -103,7 +117,7 @@
                             <a class="text-white text-2xl font-semibold">Highly supported</a>
                         </div>
                         <div class="mt-2">
-                            <p class="text-white/60 text-md">Designed for versatility, Vanta supports most script requirements to provide a seamless and stable user experience</p>
+                            <p class="text-white/60 text-md">Designed for versatility, Ascendify supports most script requirements to provide a seamless and stable user experience</p>
                         </div>
                     </div>
                     <div style="transition: 0.15s ease-out;" class="rot rounded-lg bg-white/5 hover:bg-white/10 backdrop-blur-sm flex flex-col p-10 h-full">
@@ -125,8 +139,8 @@
                             <a class="text-white text-2xl font-semibold">Customization</a>
                         </div>
                         <div class="mt-2">
-                            <p class="text-white/60 text-md">Customize your Vanta experience with a wide range of options, from interface colors to button layouts.
-</a></div></div>
+                            <p class="text-white/60 text-md">Customize your Ascendify experience with a wide range of options, from interface colors to button layouts.
+</p></div></div>
 <div style="transition: 0.15s ease-out;" class="rot rounded-lg bg-white/5 hover:bg-white/10 backdrop-blur-sm flex flex-col p-10 h-full">
     <div class="flex items-center space-x-3">
         <div class="w-12 h-12 flex items-center justify-center">
@@ -135,8 +149,8 @@
         <a class="text-white text-2xl font-semibold">Performance</a>
     </div>
     <div class="mt-2">
-        <p class="text-white/60 text-md">Optimized for smooth performance under heavy workloads, Vanta handles even the most demanding scripts with ease
-</a></div></div>
+        <p class="text-white/60 text-md">Optimized for smooth performance under heavy workloads, Ascendify handles even the most demanding scripts with ease
+</p></div></div>
 <div style="transition: 0.15s ease-out;" class="rot rounded-lg bg-white/5 hover:bg-white/10 backdrop-blur-sm flex flex-col p-10 h-full">
     <div class="flex items-center space-x-3">
         <div class="w-12 h-12 flex items-center justify-center">
@@ -145,8 +159,8 @@
         <a class="text-white text-2xl font-semibold">Code Diagnostics</a>
     </div>
     <div class="mt-2">
-        <p class="text-white/60 text-md">Vanta delivers an IDE-like experience with Monaco Editor integration and real-time code validation
-</a></div></div>
+        <p class="text-white/60 text-md">Ascendify delivers an IDE-like experience with Monaco Editor integration and real-time code validation
+</p></div></div>
 <div style="transition: 0.15s ease-out;" class="rot rounded-lg bg-white/5 hover:bg-white/10 backdrop-blur-sm flex flex-col p-10 h-full">
     <div class="flex items-center space-x-3">
         <div class="w-12 h-12 flex items-center justify-center">
@@ -155,7 +169,7 @@
         <a class="text-white text-2xl font-semibold">Script Hub</a>
     </div>
     <div class="mt-2">
-        <a class="text-white/60 text-md font-medium">Vanta offers a fully integrated, standalone & fully moderated script hub that lets developers publish scripts directly from the interface</a>
+        <a class="text-white/60 text-md font-medium">Ascendify offers a fully integrated, standalone & fully moderated script hub that lets developers publish scripts directly from the interface</a>
     </div>
 </div>
 </div></div>
@@ -173,28 +187,28 @@
         </div>
         <div class="grid grid-cols-2 lg:grid-cols-4 gap-2 w-full h-full mt-12">
             <div style="transition: 0.15s ease-out;" class="rot bg-white/5 rounded-lg hover:bg-white/10 backdrop-blur-sm transition-all flex flex-col p-10 h-full">
-                <h1 class="text-white font-semibold text-xl">Vanta Weekly </h1>
-                <a class="text-white/60 text-md mb-6">One-week access to Vanta</a>
+                <h1 class="text-white font-semibold text-xl">Ascendify Weekly </h1>
+                <a class="text-white/60 text-md mb-6">One-week access to Ascendify</a>
                 <a class="bg-white/10 rounded-lg text-white hover:bg-white/20 text-center font-semibold px-6 py-1 transition-all hover:translate-y-[-3px]" onclick="openWidget('weekly')">$5.99 USD </a>
             </div>
             <div style="transition: 0.15s ease-out;" class="rot bg-white/5 rounded-lg hover:bg-white/10 backdrop-blur-sm transition-all flex flex-col p-10 h-full">
-                <h1 class="text-white font-semibold text-xl">Vanta Monthly </h1>
-                <a class="text-white/60 text-md mb-6">One-month access to Vanta</a>
+                <h1 class="text-white font-semibold text-xl">Ascendify Monthly </h1>
+                <a class="text-white/60 text-md mb-6">One-month access to Ascendify</a>
                 <a class="bg-white/10 rounded-lg text-white hover:bg-white/20 text-center font-semibold px-6 py-1 transition-all hover:translate-y-[-3px]" onclick="openWidget('monthly')">$16.99 USD </a>
             </div>
             <div style="transition: 0.15s ease-out;" class="rot bg-white/5 rounded-lg hover:bg-white/10 backdrop-blur-sm transition-all flex flex-col p-10 h-full">
-                <h1 class="text-white font-semibold text-xl">Vanta Quarterly </h1>
-                <a class="text-white/60 text-md mb-6">Three-month access to Vanta</a>
+                <h1 class="text-white font-semibold text-xl">Ascendify Quarterly </h1>
+                <a class="text-white/60 text-md mb-6">Three-month access to Ascendify</a>
                 <a class="bg-white/10 rounded-lg text-white hover:bg-white/20 text-center font-semibold px-6 py-1 transition-all hover:translate-y-[-3px]" onclick="openWidget('quarterly')">$39.99 USD </a>
             </div>
             <div style="transition: 0.15s ease-out;" class="rot bg-white/5 rounded-lg hover:bg-white/10 backdrop-blur-sm transition-all flex flex-col p-10 h-full">
-                <h1 class="text-white font-semibold text-xl">Vanta Yearly </h1>
-                <a class="text-white/60 text-md mb-6">One-year access to Vanta</a>
+                <h1 class="text-white font-semibold text-xl">Ascendify Yearly </h1>
+                <a class="text-white/60 text-md mb-6">One-year access to Ascendify</a>
                 <a class="bg-white/10 rounded-lg text-white hover:bg-white/20 text-center font-semibold px-6 py-1 transition-all hover:translate-y-[-3px]" onclick="openWidget('yearly')">$59.99 USD </a>
             </div>
             <h1 class="font-medium mt-4 text-white/50">
-                Existing user? 
-                <a href="/static/Install Vanta.exe" class="text-blue-400/50 transition-all hover:text-blue-400">
+                Existing user?
+                <a href="/static/Install Ascendify.exe" class="text-blue-400/50 transition-all hover:text-blue-400">
                     Download for Windows <i class="fa-brands fa-windows ml-1"></i>
                 </a>
             </h1>
@@ -236,7 +250,7 @@
             <button onclick="confirmPaid()" class="ml-auto bg-white text-center font-semibold text-black rounded-lg px-6 py-1 transition-all hover:bg-white/75 hover:translate-y-[-3px]">Done </button>
         </div>
         <div id="finalSection" class="hidden">
-            <p class="text-white mb-1">Thank you for purchasing Vanta!</p>
+            <p class="text-white mb-1">Thank you for purchasing Ascendify!</p>
             <p class="text-sm text-white/50 mb-4">Once the payment is complete, you will recieve the key in the email provided.</p>
             <button onclick="done()" class="ml-auto rounded-lg bg-white text-center font-semibold text-black px-6 py-1 transition-all hover:bg-white/75 hover:translate-y-[-3px]">Done </button>
         </div>
@@ -298,7 +312,7 @@
     }
     async function openWidget(productType) {
         selectedProduct = productType;
-        productTitle.innerText = `Vanta ${capitalize(productType)}`;
+        productTitle.innerText = `Ascendify ${capitalize(productType)}`;
         try {
             const res = await fetch("/api/payments/options");
             const data = await res.json();
