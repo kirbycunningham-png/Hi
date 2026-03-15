@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=650">
+        <title>Ascendify - Terms of Service</title>
+        <style>
+            @import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&display=swap");
+            html { background: rgb(16,0,32); height: 100%; margin: 0; padding: 0; } /* Darker purple-tinted background */
+            button, a, select, [role="button"], [tabindex]:not([tabindex="-1"]) { cursor: default !important; }
+            body { font-family: "Space Grotesk", sans-serif !important; background: rgb(16,0,32); }
+            @keyframes fadeIn { 0% { opacity: 0; } 100% { opacity: 1; } }
+            @keyframes scaleFadeIn { 0% { opacity: 0; transform: scale(0.95) translateY(10px); transform-origin: center center; } 100% { opacity: 1; transform: scale(1) translateY(0); transform-origin: center center; } }
+            @keyframes blurScaleFadeIn { 0% { opacity: 0; filter: blur(10px); transform: scale(0.95) translateY(10px); transform-origin: center center; } 100% { opacity: 1; filter: blur(0px); transform: scale(1) translateY(0); transform-origin: center center; } }
+            @keyframes scaleFadeOut { 0% { opacity: 1; transform: scale(1); transform-origin: center center; } 100% { opacity: 0; transform: scale(0.95) translateY(-10px); transform-origin: center center; } }
+            .group:hover .dropdown-menu { opacity: 1; visibility: visible; animation: scaleFadeIn 0.2s; }
+            .group:not(:hover) .dropdown-menu a { animation: scaleFadeOut 0.2s ease-out forwards; visibility: hidden; }
+            ::-webkit-scrollbar { border: none; margin: 15px; background-color: #100020; width: 5px; } /* Purple-tinted scrollbar */
+            ::-webkit-scrollbar-track { background: none; }
+            ::-webkit-scrollbar-thumb { background-color: rgba(128,0,128,0.2); border-radius: 5px; } /* Purple thumb */
+        </style>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+        <link rel="icon" type="image/x-icon" href="/static/icon.png">
+        <meta name="description" content="Ascendify Terms of Service">
+        <meta name="keywords" content="roblox, scripting, coding, lua, luau, terms">
+    </head>
+    <body class="text-white select-none animate-[fadeIn_0.3s]">
+        <div id="content" class="relative z-10 mx-12 lg:mx-0">
+            <header class="sticky top-0 z-20 w-full h-[80px]">
+                <div class="absolute inset-0 z-[-10] mx-auto max-w-screen lg:max-w-[75%]"></div>
+                <div id="hdr" class="absolute rounded-lg left-1/2 top-0 transform -translate-x-1/2 mt-1.5 py-1 mx-auto flex w-full max-w-screen lg:max-w-[75%] items-center transition-all">
+                    <div class="flex items-center flex-1">
+                        <img src="/2b84dff6-efe6-48e5-9304-1f954b3904f6-removebg-preview.png" class="max-w-6 mr-4">
+                        <h1 class="text-purple-300 text-xl font-semibold">Ascendify</h1> <!-- Purple logo text -->
+                    </div>
+                    <nav class="flex space-x-6 items-center justify-center">
+                        <a href="/" class="p-1 text-white text-lg font-medium transition-all hover:text-purple-300">Home</a> <!-- Hover purple -->
+                        <a href="#purchase" class="p-1 text-white text-lg font-medium transition-all hover:text-purple-300">Purchase</a>
+                        <li class="p-1 group relative list-none">
+                            <a class="text-white text-lg transition-all font-medium group-hover:text-purple-300 dropdown-toggle flex items-center"> <!-- Hover purple -->
+                                <i class="fa-solid fa-chevron-down text-xs mr-2 transition-all group-hover:rotate-180"></i>
+                                Legal
+                            </a>
+                            <div class="p-1 rounded-lg space-y-0.5 absolute dropdown-menu backdrop-blur-sm hidden bg-purple-950/30 text-sm text-white shadow overflow-hidden z-50 w-full min-w-max"> <!-- Purple bg -->
+                                <a class="block rounded-lg px-5 py-3 font-medium transition-all mb-1 hover:bg-purple-900/50" href="/terms">Terms of Service</a> <!-- Hover darker purple -->
+                                <a class="block rounded-lg px-5 py-3 font-medium transition-all mb-1 hover:bg-purple-900/50" href="/privacy">Privacy Policy</a>
+                            </div>
+                        </li>
+                    </nav>
+                    <div class="flex-1"></div>
+                </div>
+            </header>
+            <div class="flex flex-col items-center justify-center mt-32 max-w-screen lg:max-w-[70%] mx-auto text-left pb-20"> <!-- Added pb-20 for extra scroll space -->
+                <h1 class="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-purple-600 mb-8">Terms of Service</h1> <!-- Purple gradient title -->
+                <div class="space-y-6 text-purple-200/80"> <!-- Lighter purple text -->
+                    <p class="text-lg">Last updated: March 15, 2026</p>
+                    
+                    <section>
+                        <h2 class="text-2xl font-semibold text-purple-300 mb-4">1. Introduction</h2>
+                        <p>Welcome to Ascendify ("we", "our", or "us"). These Terms of Service ("Terms") govern your access to and use of our website, software, and services (collectively, the "Service"), including our client-sided LuaU scripting utility for Roblox. By accessing or using the Service, you agree to be bound by these Terms. If you do not agree, you may not use the Service.</p>
+                    </section>
+                    
+                    <section>
+                        <h2 class="text-2xl font-semibold text-purple-300 mb-4">2. Eligibility</h2>
+                        <p>You must be at least 18 years old or have the legal capacity to enter into contracts in your jurisdiction to use the Service. By using the Service, you represent that you meet these requirements.</p>
+                    </section>
+                    
+                    <section>
+                        <h2 class="text-2xl font-semibold text-purple-300 mb-4">3. User Accounts and Purchases</h2>
+                        <p>To access certain features, you may need to create an account or make a purchase. You agree to provide accurate information and keep it updated. Purchases are processed via cryptocurrency and are non-refundable except as required by law. Access is granted upon successful payment confirmation.</p>
+                    </section>
+                    
+                    <section>
+                        <h2 class="text-2xl font-semibold text-purple-300 mb-4">4. License and Use of Service</h2>
+                        <p>We grant you a limited, non-exclusive, non-transferable license to use the Service for personal, non-commercial purposes. You may not:</p>
+                        <ul class="list-disc pl-6 space-y-2">
+                            <li>Modify, disassemble, or reverse engineer the Service.</li>
+                            <li>Use the Service to violate Roblox's terms or any laws.</li>
+                            <li>Distribute, sell, or sublicense the Service.</li>
+                            <li>Engage in harmful activities, including malware distribution or unauthorized access.</li>
+                        </ul>
+                        <p>We reserve the right to suspend or terminate access for violations.</p>
+                    </section>
+                    
+                    <section>
+                        <h2 class="text-2xl font-semibold text-purple-300 mb-4">5. Intellectual Property</h2>
+                        <p>All content, trademarks, and intellectual property in the Service are owned by us or our licensors. You may not use them without permission.</p>
+                    </section>
+                    
+                    <section>
+                        <h2 class="text-2xl font-semibold text-purple-300 mb-4">6. Disclaimer of Warranties</h2>
+                        <p>The Service is provided "as is" without warranties. We disclaim all warranties, express or implied, including fitness for a particular purpose.</p>
+                    </section>
+                    
+                    <section>
+                        <h2 class="text-2xl font-semibold text-purple-300 mb-4">7. Limitation of Liability</h2>
+                        <p>We shall not be liable for any indirect, incidental, or consequential damages arising from the Service. Our total liability shall not exceed the amount you paid for the Service.</p>
+                    </section>
+                    
+                    <section>
+                        <h2 class="text-2xl font-semibold text-purple-300 mb-4">8. Indemnification</h2>
+                        <p>You agree to indemnify us against claims arising from your use of the Service or violation of these Terms.</p>
+                    </section>
+                    
+                    <section>
+                        <h2 class="text-2xl font-semibold text-purple-300 mb-4">9. Changes to Terms</h2>
+                        <p>We may update these Terms at any time. Continued use constitutes acceptance of changes.</p>
+                    </section>
+                    
+                    <section>
+                        <h2 class="text-2xl font-semibold text-purple-300 mb-4">10. Governing Law</h2>
+                        <p>These Terms are governed by the laws of the State of Florida, USA, without regard to conflict of laws principles.</p>
+                    </section>
+                    
+                    <section>
+                        <h2 class="text-2xl font-semibold text-purple-300 mb-4">11. Contact Us</h2>
+                        <p>If you have questions, contact us via our Discord server.</p>
+                    </section>
+                </div>
+                <div class="h-20"></div> <!-- Extra empty space for scrolling -->
+            </div>
+        </div>
+        <script>
+            window.addEventListener('scroll', () => {
+                const header = document.getElementById("hdr")
+                if (window.scrollY > 1) {
+                    header.classList.add("bg-purple-950/20", "backdrop-blur-xl", "shadow", "px-8") /* Purple header on scroll */
+                } else {
+                    header.classList.remove("bg-purple-950/20", "backdrop-blur-xl", "shadow", "px-8")
+                }
+            });
+            document.addEventListener('DOMContentLoaded', function() {
+                const dropdown = document.querySelector('.group');
+                const menu = dropdown.querySelector('.dropdown-menu');
+                dropdown.addEventListener('mouseenter', () => {
+                    menu.classList.remove('hidden');
+                });
+                dropdown.addEventListener('mouseleave', () => {
+                    menu.classList.add('hidden');
+                });
+            });
+        </script>
+        <script defer src="https://static.cloudflareinsights.com/beacon.min.js/v8c78df7c7c0f484497ecbca7046644da1771523124516" integrity="sha512-8DS7rgIrAmghBFwoOTujcf6D9rXvH8xm8JQ1Ja01h9QX8EzXldiszufYa4IFfKdLUKTTrnSFXLDkUEOTrZQ8Qg==" data-cf-beacon='{"version":"2024.11.0","token":"9facd51c1d6a4b7c9bab73662b7a712c","r":1,"server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
+    </body>
+</html>
