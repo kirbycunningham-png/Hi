@@ -500,36 +500,30 @@
         const hashedKey = await hashString(saltedKey);
         let expiration = 0;
         let keyType = "";
-        if (hashedKey === "08ca50c069133896a27b33e7247e643691af2e76ac35609b575b3abedc170932") {
-            expiration = Date.now() + (7 * 24 * 60 * 60 * 1000); // Week
-            keyType = "week";
+        if (hashedKey === "9f467a5c3d13f39a67da61dc95d26c50895dda646b799dd0b7a8d140494d28f5") {
+            expiration = Date.now() + (365 * 24 * 60 * 60 * 1000); // Year
+            keyType = "year";
         } else if (hashedKey === "8cd9040505a6fafabffe3954202388396bc3d6c1bf9e16ff22aeb4b2b52a828a") {
             expiration = Date.now() + (30 * 24 * 60 * 60 * 1000); // Month
             keyType = "month";
-        } else if (hashedKey === "9f467a5c3d13f39a67da61dc95d26c50895dda646b799dd0b7a8d140494d28f5") {
-            expiration = Date.now() + (365 * 24 * 60 * 60 * 1000); // Year
-            keyType = "year";
+        } else if (hashedKey === "0c4d1f0a1b4b3c9f9e3d2f1a4b6c8e0f2d4b6c8e0f2a4b6c8e0f1d3b5c7e9f0") {
+            expiration = Date.now() + (7 * 24 * 60 * 60 * 1000); // Week
+            keyType = "week";
         } else {
             document.getElementById("redeemError").innerText = "Invalid license key.";
             document.getElementById("redeemError").classList.remove("hidden");
             return;
         }
-        const usedKey = localStorage.getItem("ascendify_key_used");
+        const usedKey = localStorage.getItem("ascendify_key_used_" + keyType);
         if (usedKey) {
             document.getElementById("redeemError").innerText = "This key has already been used.";
             document.getElementById("redeemError").classList.remove("hidden");
             return;
         }
-        localStorage.setItem("ascendify_key_used", "true");
+        localStorage.setItem("ascendify_key_used_" + keyType, "true");
         document.getElementById("redeemForm").classList.add("hidden");
         document.getElementById("redeemSuccess").classList.remove("hidden");
         startExpirationClock(expiration);
-        const downloadLink = document.createElement('a');
-        downloadLink.href = '/Ascendify.exe';
-        downloadLink.download = 'Ascendify.exe';
-        document.body.appendChild(downloadLink);
-        downloadLink.click();
-        document.body.removeChild(downloadLink);
     }
     function startExpirationClock(expirationTimestamp) {
         const clockElement = document.getElementById('expirationClock');
