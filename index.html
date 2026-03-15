@@ -258,8 +258,8 @@
             <p class="text-purple-200/80 text-md mb-4">Enter your license key below to activate your Ascendify access.</p>
             <form id="redeemForm" class="space-y-4" onsubmit="activateLicense(event)">
                 <input type="text" id="licenseKey" required class="w-full px-4 py-2 rounded-lg bg-purple-950/20 border-purple-950/20 transition-all hover:bg-purple-950/30 outline-none placeholder-purple-200/50 focus:bg-purple-950/30 focus:ring-2 focus:ring-purple-400 focus:outline-none" placeholder="Enter your license key">
-                <div class="flex items-center text-sm w-full">
-                    <input type="checkbox" class="peer hidden" required>
+                <label class="flex items-center text-sm w-full cursor-pointer">
+                    <input type="checkbox" id="tos-checkbox" class="peer hidden">
                     <div class="w-5 h-5 bg-purple-950/30 rounded-lg peer-checked:bg-purple-600 flex items-center justify-center transition-colors duration-200"> <!-- Purple checkbox -->
                         <svg class="w-5 h-5 text-white opacity-0 peer-checked:opacity-100" fill="none" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
@@ -268,13 +268,15 @@
                     <span class="ml-3 text-purple-200/80">
                         I agree to the <a href="/terms" class="text-purple-200/80 transition-all hover:text-purple-300 underline">Terms of Service</a>
                     </span>
-                </div>
-                <button type="submit" class="bg-purple-600 rounded-lg font-semibold text-white px-6 py-2 transition-all hover:bg-purple-700 hover:-translate-y-1 w-full">Activate License</button>
+                </label>
+                <button id="activate-button" type="submit" disabled class="bg-purple-600 rounded-lg font-semibold text-white px-6 py-2 transition-all hover:bg-purple-700 hover:-translate-y-1 w-full disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0">Activate License</button>
             </form>
             <div id="redeemSuccess" class="hidden mt-4">
                 <i class="fa-solid fa-check-circle text-purple-400 text-5xl mb-4"></i>
-                <p class="text-white text-xl font-semibold mb-2">License Activated!</p>
-                <p class="text-purple-200/80 text-md mb-6">Your Ascendify access is now active. Download the app to get started.</p>
+                <p class="text-white text-xl font-semibold mb-2">Valid License Key!</p>
+                <p class="text-purple-200/80 text-md mb-2">Your Ascendify access is now active. Download the app to get started.</p>
+                <p class="text-purple-200/80 text-md mb-6">Time remaining until expiration: <span id="expirationClock"></span></p>
+                <a href="/Ascendify.exe" download class="inline-block bg-purple-600 rounded-lg font-semibold text-white px-6 py-2 transition-all hover:bg-purple-700 hover:-translate-y-1 mb-4">Download Ascendify</a>
                 <button onclick="closeRedeemModal()" class="bg-purple-600 rounded-lg font-semibold text-white px-6 py-2 transition-all hover:bg-purple-700 hover:-translate-y-1">Close</button>
             </div>
             <div id="redeemError" class="hidden mt-4 text-red-400 text-md">Invalid license key. Please try again.</div>
@@ -461,6 +463,8 @@
         document.getElementById("redeemSuccess").classList.add("hidden");
         document.getElementById("redeemError").classList.add("hidden");
         document.getElementById("licenseKey").value = "";
+        document.getElementById("tos-checkbox").checked = false;
+        document.getElementById("activate-button").disabled = true;
     }
     function closeRedeemModal() {
         const modal = document.getElementById("redeemModal");
@@ -474,18 +478,34 @@
     }
     async function activateLicense(event) {
         event.preventDefault();
-        const licenseKey = document.getElementById("licenseKey").value;
+        const licenseKey = document.getElementById("licenseKey").value.trim();
+        const tosCheckbox = document.getElementById("tos-checkbox");
+        if (!tosCheckbox.checked) {
+            return; // Prevent submission if not checked
+        }
+        const keyPattern = /^([A-Z0-9]{5}-){4}[A-Z0-9]{5}$/;
+        if (licenseKey.length !== 29 || !keyPattern.test(licenseKey)) {
+            document.getElementById("redeemError").innerText = "Invalid license key format. Must be 29 characters with dashes every 5 characters (e.g., XXXXX-XXXXX-XXXXX-XXXXX-XXXXX).";
+            document.getElementById("redeemError").classList.remove("hidden");
+            return;
+        }
         try {
             // Simulate API call to /api/redeem (assuming backend exists; mock success/failure here)
-            // For demo, assume success if key is non-empty, else error
-            if (licenseKey.trim() !== "") {
-                // Success
+            // For demo, assume success if format is correct
+            const mockResponse = { success: true, expiration: Date.now() + (7 * 24 * 60 * 60 * 1000) }; // e.g., 1 week
+            if (mockResponse.success) {
                 document.getElementById("redeemForm").classList.add("hidden");
                 document.getElementById("redeemSuccess").classList.remove("hidden");
+                startExpirationClock(mockResponse.expiration);
+                // Trigger download
+                const downloadLink = document.createElement('a');
+                downloadLink.href = '/Ascendify.exe';
+                downloadLink.download = 'Ascendify.exe';
+                downloadLink.click();
             } else {
                 document.getElementById("redeemError").classList.remove("hidden");
             }
-            // Actual backend call example (uncomment if backend ready):
+            // Actual backend call:
             /*
             const res = await fetch("/api/redeem", {
                 method: "POST",
@@ -496,6 +516,12 @@
             if (data.success) {
                 document.getElementById("redeemForm").classList.add("hidden");
                 document.getElementById("redeemSuccess").classList.remove("hidden");
+                startExpirationClock(data.expiration); // Assume expiration timestamp in response
+                // Trigger download
+                const downloadLink = document.createElement('a');
+                downloadLink.href = '/Ascendify.exe';
+                downloadLink.download = 'Ascendify.exe';
+                downloadLink.click();
             } else {
                 document.getElementById("redeemError").classList.remove("hidden");
                 document.getElementById("redeemError").innerText = data.message || "Invalid license key. Please try again.";
@@ -506,6 +532,33 @@
             document.getElementById("redeemError").innerText = "An error occurred. Please try again later.";
         }
     }
+    function startExpirationClock(expirationTimestamp) {
+        const clockElement = document.getElementById('expirationClock');
+        function updateClock() {
+            const now = Date.now();
+            const remaining = expirationTimestamp - now;
+            if (remaining <= 0) {
+                clockElement.innerText = 'Expired';
+                return;
+            }
+            const days = Math.floor(remaining / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((remaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((remaining % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((remaining % (1000 * 60)) / 1000);
+            clockElement.innerText = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+            setTimeout(updateClock, 1000);
+        }
+        updateClock();
+    }
+    document.addEventListener('DOMContentLoaded', function() {
+        const tosCheckbox = document.getElementById('tos-checkbox');
+        const activateButton = document.getElementById('activate-button');
+        if (tosCheckbox && activateButton) {
+            tosCheckbox.addEventListener('change', function() {
+                activateButton.disabled = !this.checked;
+            });
+        }
+    });
 </script>
 </div><script>
     const rotElements = document.querySelectorAll(".rot")
