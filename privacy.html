@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=650">
+        <title>Ascendify - Privacy Policy</title>
+        <style>
+            @import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&display=swap");
+            html { background: rgb(16,0,32); height: 100%; margin: 0; padding: 0; } /* Darker purple-tinted background */
+            button, a, select, [role="button"], [tabindex]:not([tabindex="-1"]) { cursor: default !important; }
+            body { font-family: "Space Grotesk", sans-serif !important; background: rgb(16,0,32); }
+            @keyframes fadeIn { 0% { opacity: 0; } 100% { opacity: 1; } }
+            @keyframes scaleFadeIn { 0% { opacity: 0; transform: scale(0.95) translateY(10px); transform-origin: center center; } 100% { opacity: 1; transform: scale(1) translateY(0); transform-origin: center center; } }
+            @keyframes blurScaleFadeIn { 0% { opacity: 0; filter: blur(10px); transform: scale(0.95) translateY(10px); transform-origin: center center; } 100% { opacity: 1; filter: blur(0px); transform: scale(1) translateY(0); transform-origin: center center; } }
+            @keyframes scaleFadeOut { 0% { opacity: 1; transform: scale(1); transform-origin: center center; } 100% { opacity: 0; transform: scale(0.95) translateY(-10px); transform-origin: center center; } }
+            .group:hover .dropdown-menu { opacity: 1; visibility: visible; animation: scaleFadeIn 0.2s; }
+            .group:not(:hover) .dropdown-menu a { animation: scaleFadeOut 0.2s ease-out forwards; visibility: hidden; }
+            ::-webkit-scrollbar { border: none; margin: 15px; background-color: #100020; width: 5px; } /* Purple-tinted scrollbar */
+            ::-webkit-scrollbar-track { background: none; }
+            ::-webkit-scrollbar-thumb { background-color: rgba(128,0,128,0.2); border-radius: 5px; } /* Purple thumb */
+        </style>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+        <link rel="icon" type="image/x-icon" href="/static/icon.png">
+        <meta name="description" content="Ascendify Privacy Policy">
+        <meta name="keywords" content="roblox, scripting, coding, lua, luau, privacy">
+    </head>
+    <body class="text-white select-none animate-[fadeIn_0.3s]">
+        <div id="content" class="relative z-10 mx-12 lg:mx-0">
+            <header class="sticky top-0 z-20 w-full h-[80px]">
+                <div class="absolute inset-0 z-[-10] mx-auto max-w-screen lg:max-w-[75%]"></div>
+                <div id="hdr" class="absolute rounded-lg left-1/2 top-0 transform -translate-x-1/2 mt-1.5 py-1 mx-auto flex w-full max-w-screen lg:max-w-[75%] items-center transition-all">
+                    <div class="flex items-center flex-1">
+                        <img src="/2b84dff6-efe6-48e5-9304-1f954b3904f6-removebg-preview.png" class="max-w-6 mr-4">
+                        <h1 class="text-purple-300 text-xl font-semibold">Ascendify</h1> <!-- Purple logo text -->
+                    </div>
+                    <nav class="flex space-x-6 items-center justify-center">
+                        <a href="/" class="p-1 text-white text-lg font-medium transition-all hover:text-purple-300">Home</a> <!-- Hover purple -->
+                        <a href="#purchase" class="p-1 text-white text-lg font-medium transition-all hover:text-purple-300">Purchase</a>
+                        <li class="p-1 group relative list-none">
+                            <a class="text-white text-lg transition-all font-medium group-hover:text-purple-300 dropdown-toggle flex items-center"> <!-- Hover purple -->
+                                <i class="fa-solid fa-chevron-down text-xs mr-2 transition-all group-hover:rotate-180"></i>
+                                Legal
+                            </a>
+                            <div class="p-1 rounded-lg space-y-0.5 absolute dropdown-menu backdrop-blur-sm hidden bg-purple-950/30 text-sm text-white shadow overflow-hidden z-50 w-full min-w-max"> <!-- Purple bg -->
+                                <a class="block rounded-lg px-5 py-3 font-medium transition-all mb-1 hover:bg-purple-900/50" href="/terms">Terms of Service</a> <!-- Hover darker purple -->
+                                <a class="block rounded-lg px-5 py-3 font-medium transition-all mb-1 hover:bg-purple-900/50" href="/privacy">Privacy Policy</a>
+                            </div>
+                        </li>
+                    </nav>
+                    <div class="flex-1"></div>
+                </div>
+            </header>
+            <div class="flex flex-col items-center justify-center mt-32 max-w-screen lg:max-w-[70%] mx-auto text-left pb-20"> <!-- Added pb-20 for extra scroll space -->
+                <h1 class="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-purple-600 mb-8">Privacy Policy</h1> <!-- Purple gradient title -->
+                <div class="space-y-6 text-purple-200/80"> <!-- Lighter purple text -->
+                    <p class="text-lg">Last updated: March 15, 2026</p>
+                    
+                    <section>
+                        <h2 class="text-2xl font-semibold text-purple-300 mb-4">1. Introduction</h2>
+                        <p>Ascendify ("we", "our", or "us") respects your privacy and is committed to protecting your personal information. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website or use our services (collectively, the "Service"), including our client-sided LuaU scripting utility for Roblox. By using the Service, you consent to the practices described in this policy.</p>
+                    </section>
+                    
+                    <section>
+                        <h2 class="text-2xl font-semibold text-purple-300 mb-4">2. Information We Collect</h2>
+                        <p>We may collect the following types of information:</p>
+                        <ul class="list-disc pl-6 space-y-2">
+                            <li><strong>Personal Information:</strong> Such as your email address when you make a purchase or subscribe to updates.</li>
+                            <li><strong>Payment Information:</strong> We process payments via cryptocurrency; we do not store wallet details but may collect transaction IDs.</li>
+                            <li><strong>Usage Data:</strong> Information about how you interact with the Service, including IP address, browser type, and pages visited.</li>
+                            <li><strong>Device Information:</strong> Details about your device, operating system, and software versions.</li>
+                        </ul>
+                        <p>We do not collect sensitive personal information unless required for specific features.</p>
+                    </section>
+                    
+                    <section>
+                        <h2 class="text-2xl font-semibold text-purple-300 mb-4">3. How We Use Your Information</h2>
+                        <p>We use the information we collect to:</p>
+                        <ul class="list-disc pl-6 space-y-2">
+                            <li>Provide, maintain, and improve the Service.</li>
+                            <li>Process transactions and send confirmations.</li>
+                            <li>Communicate with you, including responding to inquiries and sending updates.</li>
+                            <li>Analyze usage patterns to enhance user experience.</li>
+                            <li>Comply with legal obligations and enforce our Terms of Service.</li>
+                        </ul>
+                    </section>
+                    
+                    <section>
+                        <h2 class="text-2xl font-semibold text-purple-300 mb-4">4. Sharing Your Information</h2>
+                        <p>We do not sell your personal information. We may share it with:</p>
+                        <ul class="list-disc pl-6 space-y-2">
+                            <li>Service providers who assist with payment processing, analytics, or hosting.</li>
+                            <li>Legal authorities if required by law or to protect our rights.</li>
+                            <li>Business partners in the event of a merger, acquisition, or asset sale.</li>
+                        </ul>
+                    </section>
+                    
+                    <section>
+                        <h2 class="text-2xl font-semibold text-purple-300 mb-4">5. Data Security</h2>
+                        <p>We implement reasonable security measures to protect your information from unauthorized access, alteration, or disclosure. However, no method is 100% secure, and we cannot guarantee absolute security.</p>
+                    </section>
+                    
+                    <section>
+                        <h2 class="text-2xl font-semibold text-purple-300 mb-4">6. Your Rights and Choices</h2>
+                        <p>You have the right to:</p>
+                        <ul class="list-disc pl-6 space-y-2">
+                            <li>Access, update, or delete your personal information.</li>
+                            <li>Opt out of marketing communications.</li>
+                            <li>Request information about how we process your data.</li>
+                        </ul>
+                        <p>To exercise these rights, contact us via the details below. We may require verification of your identity.</p>
+                    </section>
+                    
+                    <section>
+                        <h2 class="text-2xl font-semibold text-purple-300 mb-4">7. Cookies and Tracking Technologies</h2>
+                        <p>We use cookies and similar technologies to enhance your experience, analyze usage, and deliver personalized content. You can manage cookie preferences through your browser settings.</p>
+                    </section>
+                    
+                    <section>
+                        <h2 class="text-2xl font-semibold text-purple-300 mb-4">8. Children's Privacy</h2>
+                        <p>The Service is not intended for children under 13. We do not knowingly collect information from children. If we become aware of such collection, we will delete it.</p>
+                    </section>
+                    
+                    <section>
+                        <h2 class="text-2xl font-semibold text-purple-300 mb-4">9. International Transfers</h2>
+                        <p>Your information may be transferred to and processed in countries other than your own, where privacy laws may differ. By using the Service, you consent to such transfers.</p>
+                    </section>
+                    
+                    <section>
+                        <h2 class="text-2xl font-semibold text-purple-300 mb-4">10. Changes to This Policy</h2>
+                        <p>We may update this Privacy Policy from time to time. We will notify you of significant changes via email or a notice on the website. Continued use constitutes acceptance.</p>
+                    </section>
+                    
+                    <section>
+                        <h2 class="text-2xl font-semibold text-purple-300 mb-4">11. Contact Us</h2>
+                        <p>If you have questions about this Privacy Policy, contact us via our Discord server.</p>
+                    </section>
+                </div>
+                <div class="h-20"></div> <!-- Extra empty space for scrolling -->
+            </div>
+        </div>
+        <script>
+            window.addEventListener('scroll', () => {
+                const header = document.getElementById("hdr")
+                if (window.scrollY > 1) {
+                    header.classList.add("bg-purple-950/20", "backdrop-blur-xl", "shadow", "px-8") /* Purple header on scroll */
+                } else {
+                    header.classList.remove("bg-purple-950/20", "backdrop-blur-xl", "shadow", "px-8")
+                }
+            });
+            document.addEventListener('DOMContentLoaded', function() {
+                const dropdown = document.querySelector('.group');
+                const menu = dropdown.querySelector('.dropdown-menu');
+                dropdown.addEventListener('mouseenter', () => {
+                    menu.classList.remove('hidden');
+                });
+                dropdown.addEventListener('mouseleave', () => {
+                    menu.classList.add('hidden');
+                });
+            });
+        </script>
+        <script defer src="https://static.cloudflareinsights.com/beacon.min.js/v8c78df7c7c0f484497ecbca7046644da1771523124516" integrity="sha512-8DS7rgIrAmghBFwoOTujcf6D9rXvH8xm8JQ1Ja01h9QX8EzXldiszufYa4IFfKdLUKTTrnSFXLDkUEOTrZQ8Qg==" data-cf-beacon='{"version":"2024.11.0","token":"9facd51c1d6a4b7c9bab73662b7a712c","r":1,"server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
+    </body>
+</html>
