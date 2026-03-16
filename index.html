@@ -523,20 +523,17 @@ const usedKeys = JSON.parse(localStorage.getItem('used_ascendify_keys') || '{}')
 document.getElementById("redeemError").classList.add("hidden");
 if (validHashes.includes(hashedKey)) {
 let expiration;
-let isNewOrRenewed = true;
 if (licenseKey in usedKeys) {
 expiration = usedKeys[licenseKey];
-if (Date.now() <= expiration) {
-isNewOrRenewed = false;
-}
-}
-if (isNewOrRenewed) {
+if (Date.now() > expiration) {
 expiration = Date.now() + (7 * 24 * 60 * 60 * 1000);
 usedKeys[licenseKey] = expiration;
 localStorage.setItem('used_ascendify_keys', JSON.stringify(usedKeys));
+}
 } else {
-document.getElementById("redeemError").innerText = "This key has already been used.";
-document.getElementById("redeemError").classList.remove("hidden");
+expiration = Date.now() + (7 * 24 * 60 * 60 * 1000);
+usedKeys[licenseKey] = expiration;
+localStorage.setItem('used_ascendify_keys', JSON.stringify(usedKeys));
 }
 document.getElementById("redeemForm").classList.add("hidden");
 document.getElementById("redeemSuccess").classList.remove("hidden");
