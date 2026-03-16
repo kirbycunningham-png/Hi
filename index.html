@@ -503,14 +503,6 @@
         document.getElementById("redeemError").classList.remove("hidden");
         return;
     }
-    const keyType = "day";
-    const usedKey = localStorage.getItem("ascendify_key_used_" + keyType);
-    if (usedKey) {
-        document.getElementById("redeemError").innerText = "This key has already been used.";
-        document.getElementById("redeemError").classList.remove("hidden");
-        return;
-    }
-    localStorage.setItem("ascendify_key_used_" + keyType, "true");
     const expiration = Date.now() + (24 * 60 * 60 * 1000);
     document.getElementById("redeemForm").classList.add("hidden");
     document.getElementById("redeemSuccess").classList.remove("hidden");
