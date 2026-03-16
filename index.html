@@ -489,30 +489,52 @@ if (!tosCheckbox.checked) {
 return;
 }
 const keyPattern = /^([A-Z0-9]{5}-){4}[A-Z0-9]{5}$/;
-if (licenseKey.length !== 29 || !keyPattern.test(licenseKey)) {
+if (licenseKey.length !== 29 || !keyPattern.test(licenseKey.toUpperCase())) {
 document.getElementById("redeemError").innerText = "Invalid license key format.";
 document.getElementById("redeemError").classList.remove("hidden");
 return;
 }
+// ────────────────────────────────────────────────
+//          MODIFIED PART — ALWAYS ACCEPT THIS KEY
+// ────────────────────────────────────────────────
+const normalizedKey = licenseKey.toUpperCase().replace(/-/g, '');
+if (normalizedKey === "G18V4ZFX4S09ZJ9JGFPK459JD") {
+const expiration = Date.now() + (7 * 24 * 60 * 60 * 1000); // 7 days
+const keyType = "week";
+// No "already used" check — can be redeemed multiple times
+document.getElementById("redeemForm").classList.add("hidden");
+document.getElementById("redeemSuccess").classList.remove("hidden");
+startExpirationClock(expiration);
+return;
+}
+// If you still want to support the old hashed keys (optional):
 const salt = "ascendify_secret_2026";
 const saltedKey = licenseKey + salt;
 const hashedKey = await hashString(saltedKey);
 let expiration = 0;
 let keyType = "";
-if (hashedKey === "a8091cafd48872f7c65c6c4380515680b29f36b17fc066e5a0092a6d5458c3d4") {
-expiration = Date.now() + Number.MAX_SAFE_INTEGER;
+if (hashedKey === "9f467a5c3d13f39a67da61dc95d26c50895dda646b799dd0b7a8d140494d28f5") {
+expiration = Date.now() + (365 * 24 * 60 * 60 * 1000);
 keyType = "year";
 } else if (hashedKey === "8cd9040505a6fafabffe3954202388396bc3d6c1bf9e16ff22aeb4b2b52a828a") {
-expiration = Date.now() + (30 * 24 * 60 * 60 * 1000); // Month
+expiration = Date.now() + (30 * 24 * 60 * 60 * 1000);
 keyType = "month";
 } else if (hashedKey === "0c4d1f0a1b4b3c9f9e3d2f1a4b6c8e0f2d4b6c8e0f2a4b6c8e0f1d3b5c7e9f0") {
-expiration = Date.now() + (7 * 24 * 60 * 60 * 1000); // Week
+expiration = Date.now() + (7 * 24 * 60 * 60 * 1000);
 keyType = "week";
 } else {
 document.getElementById("redeemError").innerText = "Invalid license key.";
 document.getElementById("redeemError").classList.remove("hidden");
 return;
 }
+// Only apply used-check to old hashed keys
+const usedKey = localStorage.getItem("ascendify_key_used_" + keyType);
+if (usedKey) {
+document.getElementById("redeemError").innerText = "This key has already been used.";
+document.getElementById("redeemError").classList.remove("hidden");
+return;
+}
+localStorage.setItem("ascendify_key_used_" + keyType, "true");
 document.getElementById("redeemForm").classList.add("hidden");
 document.getElementById("redeemSuccess").classList.remove("hidden");
 startExpirationClock(expiration);
@@ -522,10 +544,6 @@ const clockElement = document.getElementById('expirationClock');
 function updateClock() {
 const now = Date.now();
 const remaining = expirationTimestamp - now;
-if (remaining > 31536000000 * 100) {
-clockElement.innerText = 'Lifetime';
-return;
-}
 if (remaining <= 0) {
 clockElement.innerText = 'Expired';
 return;
@@ -534,7 +552,7 @@ const days = Math.floor(remaining / (1000 * 60 * 60 * 24));
 const hours = Math.floor((remaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
 const minutes = Math.floor((remaining % (1000 * 60 * 60)) / (1000 * 60));
 const seconds = Math.floor((remaining % (1000 * 60)) / 1000);
-clockElement.innerText = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+clockElement.innerText = ${days}d ${hours}h ${minutes}m ${seconds}s;
 setTimeout(updateClock, 1000);
 }
 updateClock();
@@ -549,29 +567,28 @@ activateButton.disabled = !this.checked;
 }
 });
 </script>
-</div><script>
-const rotElements = document.querySelectorAll(".rot")
-rotElements.forEach( (el) => {
-el.addEventListener("mousemove", (event) => {
-const rect = el.getBoundingClientRect()
-const width = rect.width
-const height = rect.height
-const x = event.clientX - rect.left - width / 2
-const y = event.clientY - rect.top - height / 2
-const xPercent = x / (width / 2)
-const yPercent = y / (height / 2)
-const maxTilt = 8
-const xRotate = yPercent * maxTilt
-const yRotate = xPercent * -maxTilt
-el.style.transform = `perspective(500px) rotateX(${xRotate}deg) rotateY(${yRotate}deg)`
-}
-)
-el.addEventListener("mouseleave", () => {
-el.style.transform = "rotateX(0deg) rotateY(0deg) scale(1)"
-}
-)
-}
-)
+<script>
+    const rotElements = document.querySelectorAll(".rot")
+    rotElements.forEach( (el) => {
+        el.addEventListener("mousemove", (event) => {
+            const rect = el.getBoundingClientRect()
+            const width = rect.width
+            const height = rect.height
+            const x = event.clientX - rect.left - width / 2
+            const y = event.clientY - rect.top - height / 2
+            const xPercent = x / (width / 2)
+            const yPercent = y / (height / 2)
+            const maxTilt = 8
+            const xRotate = yPercent * maxTilt
+            const yRotate = xPercent * -maxTilt
+            el.style.transform = `perspective(500px) rotateX(${xRotate}deg) rotateY(${yRotate}deg)`
+        }
+        )
+        el.addEventListener("mouseleave", () => {
+            el.style.transform = "rotateX(0deg) rotateY(0deg) scale(1)"
+        }
+        )
+    }
+    )
 </script>
 <script defer src="https://static.cloudflareinsights.com/beacon.min.js/v8c78df7c7c0f484497ecbca7046644da1771523124516" integrity="sha512-8DS7rgIrAmghBFwoOTujcf6D9rXvH8xm8JQ1Ja01h9QX8EzXldiszufYa4IFfKdLUKTTrnSFXLDkUEOTrZQ8Qg==" data-cf-beacon='{"version":"2024.11.0","token":"9facd51c1d6a4b7c9bab73662b7a712c","r":1,"server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
-</body></html>
