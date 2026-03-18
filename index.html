@@ -274,7 +274,7 @@
             <div id="redeemSuccess" class="hidden mt-4">
                 <i class="fa-solid fa-check-circle text-purple-400 text-5xl mb-4"></i>
                 <p class="text-white text-xl font-semibold mb-2">Valid License Key!</p>
-                <p class="text-purple-200/80 text-md mb-2">Your Ascendify access is now active for 24 hours. Download the app to get started.</p>
+                <p id="successMessage" class="text-purple-200/80 text-md mb-2">Your Ascendify access is now active for one month. Download the app to get started.</p>
                 <p class="text-purple-200/80 text-md mb-6">Time remaining until expiration: <span id="expirationClock"></span></p>
                 <a href="/Ascendify.exe" download class="inline-block bg-purple-600 rounded-lg font-semibold text-white px-6 py-2 transition-all hover:bg-purple-700 hover:-translate-y-1 mb-4">Download Ascendify</a>
                 <button onclick="closeRedeemModal()" class="bg-purple-600 rounded-lg font-semibold text-white px-6 py-2 transition-all hover:bg-purple-700 hover:-translate-y-1">Close</button>
@@ -497,13 +497,13 @@
     const saltedKey = licenseKey + salt;
     const hashedKey = await hashString(saltedKey);
     // HASH of your key
-    const validHash = "da878940703063abc3b117037bf3009cb40b70d200973ea0d2e0b328660b3e0c";
+    const validHash = "227645d3822cb5a029b5fd115c2d479ffc1b667fdd06e844bc4ac5ee39efca96";
     if (hashedKey !== validHash) {
         document.getElementById("redeemError").innerText = "Invalid license key.";
         document.getElementById("redeemError").classList.remove("hidden");
         return;
     }
-    const expiration = Date.now() + (24 * 60 * 60 * 1000);
+    const expiration = Date.now() + (30 * 24 * 60 * 60 * 1000);
     document.getElementById("redeemForm").classList.add("hidden");
     document.getElementById("redeemSuccess").classList.remove("hidden");
     startExpirationClock(expiration);
